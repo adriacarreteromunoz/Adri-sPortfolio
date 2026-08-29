@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:oklch(97% 0.012 80);}
+  ::selection{background:oklch(65% 0.13 75);color:#fff;}
+  a{color:oklch(35% 0.05 75);}
+  a:hover{color:oklch(65% 0.13 75);}
+  .ig-carousel::-webkit-scrollbar{display:none;}
+  .bcn-scroll::-webkit-scrollbar{display:none;}
+</style>
+<link rel="stylesheet" href="./bcn-app/fig-assets.css">
+<link rel="stylesheet" href="./bcn-app/fig-tokens.css">
+<link rel="stylesheet" href="./bcn-app/fig-typography.css">
+</helmet>
+
+<div style="font-family:Helvetica,Arial,sans-serif;color:oklch(20% 0.01 80);background:oklch(97% 0.012 80);overflow-x:hidden;">
+
+  <!-- NAV -->
+  <div style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:22px 48px;mix-blend-mode:difference;">
+    <div style="font-family:'Playfair Display',serif;font-size:15px;letter-spacing:0.14em;color:#fff;text-transform:uppercase;">Adrià Carretero</div>
+    <div style="display:flex;gap:28px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#fff;">
+      <a href="#work" style="text-decoration:none;color:#fff;">Trabajo</a>
+      <a href="#work3" style="text-decoration:none;color:#fff;">Poster</a>
+      <a href="#work4" style="text-decoration:none;color:#fff;">RRSS</a>
+      <a href="#work5" style="text-decoration:none;color:#fff;">Magazine</a>
+      <a href="#work6" style="text-decoration:none;color:#fff;">BCN App</a>
+      <a href="#contact" style="text-decoration:none;color:#fff;">Contacto</a>
+    </div>
+  </div>
+
+  <!-- WELCOME HEADER -->
+  <div style="position:relative;width:100vw;height:100vh;min-height:640px;overflow:hidden;background:oklch(15% 0.01 80);">
+    <video ref="{{ videoRef }}" src="uploads/Logo%20Assembly%20768x768.mp4" autoplay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsinline="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+      <div style="font-size:13px;letter-spacing:0.24em;text-transform:uppercase;color:#fff;">Bienvenido a mi portfolio</div>
+    </div>
+  </div>
+
+  <!-- PROJECT: PRIORITY CLUB -->
+  <div id="work" style="background:oklch(14% 0.01 80);color:#fff;padding:120px 0 100px;">
+    <div style="max-width: 1160px; margin: 0 auto; padding: 0 32px; width: 1291px; height: 1656px">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;">
+        <div>
+          <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(65% 0.13 75);margin-bottom:16px;">01 — Branding</div>
+          <div style="font-family:Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(48px,7vw,88px);line-height:0.92;letter-spacing:-0.02em;text-transform:uppercase;">Priority<br>Club</div>
+        </div>
+        <div style="display:flex;gap:48px;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Rol</div>
+            <div style="font-size:15px;">Diseño de logo<br>Identidad de marca</div>
+          </div>
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Sector</div>
+            <div style="font-size:15px;">Streetwear / Y2K</div>
+          </div>
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Herramientas</div>
+            <div style="font-size:15px;">Photoshop, After Effects, Illustrator</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:0.8fr 1.2fr;gap:64px;align-items:center;margin-bottom:80px;">
+        <div style="position: relative; aspect-ratio: 1/1; background: #fff; border-radius: 0px; display: flex; align-items: center; justify-content: center; padding: 48px; overflow: visible; width: 570px; height: 337px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px">
+          <video ref="{{ videoRef2 }}" src="uploads/Logo%20Assembly.mp4" autoplay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsinline="{{ true }}" style="width: 675px; object-fit: contain; height: 392px"></video>
+        </div>
+        <p style="font-size:17px;line-height:1.8;color:rgba(255,255,255,0.75);margin:0;max-width:520px;">
+          Priority Club es una marca de streetwear con estética Y2K que convierte la competición en símbolo de pertenencia: una estrella fugaz como logotipo, dejando una estela que evoca velocidad, ambición y una comunidad que corre por delante. Diseñé el logotipo y su sistema de marca para que funcionara tanto en una etiqueta de prenda como animado en redes.
+        </p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        <div style="grid-column:span 2;aspect-ratio:16/10;background:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0px,rgba(255,255,255,0.06) 2px,transparent 2px,transparent 16px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;">lookbook — campaña principal</div>
+        <div style="aspect-ratio:4/5;background:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0px,rgba(255,255,255,0.06) 2px,transparent 2px,transparent 16px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;text-align:center;padding:16px;">foto de producto</div>
+        <div style="aspect-ratio:4/5;background:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0px,rgba(255,255,255,0.06) 2px,transparent 2px,transparent 16px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;text-align:center;padding:16px;">detalle de etiqueta</div>
+        <div style="grid-column:span 2;aspect-ratio:16/10;background:repeating-linear-gradient(135deg,rgba(255,255,255,0.06) 0px,rgba(255,255,255,0.06) 2px,transparent 2px,transparent 16px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:0.05em;">street style — comunidad</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 3: SEVERANCE POSTER -->
+  <div id="work3" style="background:oklch(94% 0.015 145);padding:120px 0 100px;">
+    <div style="max-width:1160px;margin:0 auto;padding:0 32px;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;">
+        <div>
+          <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(45% 0.03 145);margin-bottom:16px;">02 — Rediseño editorial</div>
+          <div style="font-family:Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(48px,7vw,88px);line-height:0.92;letter-spacing:-0.02em;text-transform:uppercase;color:oklch(20% 0.01 145);">Severance<br>Poster</div>
+        </div>
+        <div style="display:flex;gap:48px;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:oklch(45% 0.02 145);margin-bottom:6px;">Rol</div>
+            <div style="font-size:15px;color:oklch(20% 0.01 145);">Rediseño de cartel<br>Dirección tipográfica</div>
+          </div>
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:oklch(45% 0.02 145);margin-bottom:6px;">Estilo</div>
+            <div style="font-size:15px;color:oklch(20% 0.01 145);">Tipográfico internacional (suizo)</div>
+          </div>
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:oklch(45% 0.02 145);margin-bottom:6px;">Herramientas</div>
+            <div style="font-size:15px;color:oklch(20% 0.01 145);">Adobe illustrator</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:64px;align-items:start;">
+        <div>
+          
+          <div ref="{{ sliderRef }}" onPointerDown="{{ onPointerDown }}" onPointerMove="{{ onPointerMove }}" onPointerUp="{{ onPointerUp }}" onPointerLeave="{{ onPointerUp }}" style="position: relative; aspect-ratio: 4/5; overflow: visible; box-shadow: 0 20px 60px rgba(0,0,0,0.15); cursor: ew-resize; user-select: none; touch-action: none; width: 491px; height: 655px">
+            <img src="uploads/SEVERANCE.png" alt="Rediseño" draggable="{{ false }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+            <div style="position:absolute;inset:0;overflow:hidden;clip-path:{{ beforeClip }};">
+              <img src="uploads/713MTIICuTL._AC_UF350%2C350_QL80_.jpg" alt="Original de Apple TV+" draggable="{{ false }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+            </div>
+            <div style="position:absolute;top:0;bottom:0;width:2px;background:#fff;left:{{ sliderPercent }}%;transform:translateX(-50%);pointer-events:none;">
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.3);font-size:15px;">↔</div>
+            </div>
+            <div style="position:absolute;top:14px;left:14px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(0,0,0,0.6);color:#fff;padding:5px 9px;border-radius:2px;pointer-events:none;">Original</div>
+            <div style="position:absolute;top:14px;right:14px;font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(0,0,0,0.6);color:#fff;padding:5px 9px;border-radius:2px;pointer-events:none;">Rediseño</div>
+          </div><div style="font-size:12px;color:oklch(45% 0.02 145);margin-top:14px;text-align:center;">Arrastra para comparar</div>
+        </div>
+        <div style="max-width:560px;">
+          <p style="font-size:17px;line-height:1.8;color:oklch(30% 0.02 145);margin:0 0 24px;">
+            El cartel original de Apple TV+ vende <em>Severance</em> como misterio de prestigio: retrato fotográfico, iluminación cinematográfica, una ilustración surreal flotando sobre la cabeza. Es efectivo, pero cuenta la historia desde fuera, como espectáculo.
+          </p>
+          <p style="font-size:17px;line-height:1.8;color:oklch(30% 0.02 145);margin:0 0 24px;">
+            Quise contarla desde dentro: como la vería Lumon Industries. Por eso rediseñé el cartel con el Estilo Tipográfico Internacional (suizo) — retícula estricta, Helvetica en mayúsculas, jerarquía por tamaño y peso, un solo color de acento y espacio en blanco que respeta el margen como si fuera un manual corporativo. Sustituí el retrato por un icono plano de silla y terminal, y añadí el pictograma de "goteo" del programa de bienestar como único gesto simbólico.
+          </p>
+          <p style="font-size:17px;line-height:1.8;color:oklch(30% 0.02 145);margin:0;">
+            El resultado es más frío y más funcional que emocional — y por eso funciona: la serie trata sobre reducir personas a procedimientos, así que el propio cartel debía sentirse como un documento de la empresa, no como una pieza de marketing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 4: RRSS CAROUSEL -->
+  <div id="work4" style="background:oklch(97% 0.012 80);padding:120px 0 140px;">
+    <div style="max-width:1160px;margin:0 auto;padding:0 32px;">
+      <div style="margin-bottom:64px;">
+        <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(65% 0.13 75);margin-bottom:16px;">03 — Contenido social</div>
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(40px,6vw,72px);line-height:1;color:oklch(20% 0.01 80);">Post para RRSS</div>
+        <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:20px;color:oklch(45% 0.02 80);margin-top:10px;">Carrusel de Instagram — marca de joyas maximalista, Barcelona</div>
+        <div style="font-size:13px;color:oklch(55% 0.02 80);margin-top:8px;">(fotos generadas por IA debido al budget)</div>
+        <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:oklch(55% 0.02 80);margin-top:20px;margin-bottom:6px;">Herramientas</div>
+        <div style="font-size:15px;color:oklch(20% 0.01 80);">ChatGPT, Photoshop</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:80px;align-items:center;justify-content:center;">
+        <div style="display:flex;justify-content:center;">
+          <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ 360 }}" height="{{ 780 }}" hint-size="360,780">
+            <div style="height:100%;display:flex;flex-direction:column;background:#fff;font-family:-apple-system,system-ui,sans-serif;padding-top:52px;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;">
+                <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,oklch(65% 0.13 75),oklch(45% 0.03 80));flex-shrink:0;"></div>
+                <div style="flex:1;">
+                  <div style="font-size:13px;font-weight:600;color:#111;">solell.jewelry</div>
+                  <div style="font-size:11px;color:#666;">Barcelona, España</div>
+                </div>
+                <div style="font-size:16px;color:#111;letter-spacing:2px;">•••</div>
+              </div>
+              <div style="position:relative;width:100%;">
+                <div ref="{{ carouselRef }}" class="ig-carousel" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;width:100%;aspect-ratio:3/4;">
+                  <img src="uploads/Post_rrss_Mesa%20de%20trabajo%201.png" style="scroll-snap-align:start;flex:0 0 100%;width:100%;height:100%;object-fit:cover;">
+                  <img src="uploads/ChatGPT%20Image%205%20jul%202026%2C%2013_32_05.png" style="scroll-snap-align:start;flex:0 0 100%;width:100%;height:100%;object-fit:cover;">
+                  <img src="uploads/ChatGPT%20Image%205%20jul%202026%2C%2014_57_10.png" style="scroll-snap-align:start;flex:0 0 100%;width:100%;height:100%;object-fit:cover;">
+                  <img src="uploads/ChatGPT%20Image%205%20jul%202026%2C%2015_03_45.png" style="scroll-snap-align:start;flex:0 0 100%;width:100%;height:100%;object-fit:cover;">
+                  <img src="uploads/ChatGPT%20Image%205%20jul%202026%2C%2015_08_39.png" style="scroll-snap-align:start;flex:0 0 100%;width:100%;height:100%;object-fit:cover;">
+                  <img src="uploads/ChatGPT%20Image%205%20jul%202026%2C%2015_16_30.png" style="scroll-snap-align:start;flex:0 0 100%;width:100%;height:100%;object-fit:cover;">
+                </div>
+                <sc-if value="{{ showPrevArrow }}" hint-placeholder-val="{{ true }}">
+                  <div onClick="{{ prevSlide }}" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                    <svg width="8" height="13" viewBox="0 0 8 13"><path d="M7 1 1 6.5 7 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ showNextArrow }}" hint-placeholder-val="{{ true }}">
+                  <div onClick="{{ nextSlide }}" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer;">
+                    <svg width="8" height="13" viewBox="0 0 8 13"><path d="M1 1 7 6.5 1 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display:flex;justify-content:center;gap:5px;padding:9px 0 4px;">
+                <sc-for list="{{ igDots }}" as="dot" hint-placeholder-count="5">
+                  <div style="width:5.5px;height:5.5px;border-radius:50%;background:{{ dot.color }};"></div>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;padding:6px 14px;">
+                <svg width="23" height="21" viewBox="0 0 23 21"><path d="M11.5 20 2 11.2C-1 8.2 0.6 2 5.5 1 8.5 0.4 10.5 2 11.5 3.6 12.5 2 14.5 0.4 17.5 1 22.4 2 24 8.2 21 11.2Z" fill="none" stroke="#111" stroke-width="1.4"></path></svg>
+                <svg width="22" height="21" viewBox="0 0 22 21"><path d="M1 1h20v13H8l-6 6V14H1Z" fill="none" stroke="#111" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+                <svg width="21" height="21" viewBox="0 0 21 21"><path d="M1 10.5 19 1 12 20l-3-8-8-3Z" fill="none" stroke="#111" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+                <div style="flex:1;"></div>
+                <svg width="17" height="21" viewBox="0 0 17 21"><path d="M1 1h15v19l-7.5-5L1 20Z" fill="none" stroke="#111" stroke-width="1.4" stroke-linejoin="round"></path></svg>
+              </div>
+              <div style="padding:2px 14px;font-size:12.5px;color:#111;line-height:1.5;">
+                <span style="font-weight:600;">solell.jewelry</span> El oro no descansa ni en la arena — nueva colección ya disponible.
+              </div>
+              <div style="padding:6px 14px 0;font-size:11.5px;color:#999;">Ver los 24 comentarios</div>
+              <div style="padding:4px 14px 0;font-size:12px;color:#111;line-height:1.5;"><span style="font-weight:600;">marina.ferrer</span> me lo pido en cuanto salga 😍</div>
+              <div style="padding:2px 14px 0;font-size:12px;color:#111;line-height:1.5;"><span style="font-weight:600;">jordi.vidal</span> la última foto es todo</div>
+              <div style="padding:4px 14px 0;font-size:10.5px;color:#999;letter-spacing:0.02em;">Hace 2 h</div>
+            </div>
+          </x-import>
+        </div>
+        <div style="max-width:480px;">
+          <p style="font-size:17px;line-height:1.8;color:oklch(30% 0.015 80);margin:0 0 24px;">
+            Diseñé este carrusel para el lanzamiento de temporada de Solell, una marca de joyería maximalista con sede en Barcelona. Cada slide muestra una faceta distinta de la campaña — retrato, producto y contexto — pensada para el desplazamiento horizontal nativo de Instagram, donde la primera imagen debe funcionar sola como portada del feed.
+          </p>
+          <p style="font-size:17px;line-height:1.8;color:oklch(30% 0.015 80);margin:0;">
+            El orden de las fotos sigue un ritmo deliberado: abre con el gesto (mano y anillos), respira con paisaje y producto, y cierra con el momento social — llevando al usuario de la pieza al estilo de vida en cinco deslizamientos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT 5: MAGAZINE REDESIGN -->
+  <div id="work5" style="background:#111;color:#fff;padding:120px 0 100px;">
+    <div style="max-width:1160px;margin:0 auto;padding:0 32px;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px;">
+        <div>
+          <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:oklch(65% 0.19 25);margin-bottom:16px;">04 — Editorial</div>
+          <div style="font-family:Helvetica,Arial,sans-serif;font-weight:800;font-size:clamp(48px,7vw,88px);line-height:0.92;letter-spacing:-0.02em;text-transform:uppercase;">Magazine<br>Redesign</div>
+        </div>
+        
+      </div>
+
+      
+
+      <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:64px;align-items:start;">
+        <p style="font-size: 17px; line-height: 1.85; color: rgba(255,255,255,0.8); margin: 0; max-width: 600px; width: 622px; height: 310px">
+          Este proyecto es un rediseño sencillo de la revista OCTANE, desarrollado como trabajo de clase. El objetivo era evolucionar la identidad visual de la revista desde un estilo editorial clásico hacia un enfoque más moderno y brutalista, centrado en una tipografía más fuerte, maquetaciones contundentes y un lenguaje visual más experimental. El principal reto fue mantener la esencia de la publicación original mientras se llevaba hacia un diseño contemporáneo y de mayor impacto — resuelto mediante un equilibrio cuidado entre estructura y ruptura visual.
+        </p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+          <div>
+            
+            
+          </div>
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Duración del proyecto</div>
+            <div style="font-size:15px;">1-7 días</div>
+          </div>
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Sector</div>
+            <div style="font-size:15px;">Arte y diseño</div>
+          </div>
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Herramientas</div>
+            <div style="font-size:15px;">Photoshop, Blender, Procreate</div>
+          </div>
+        </div>
+      </div>
+    </div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:56px;">
+        
+        <img src="uploads/Ilustración_sin_título.webp" alt="OCTANE redesign cover" style="width: 804px; aspect-ratio: 1650/2100; object-fit: cover; height: 1133px; overflow: visible"><img src="uploads/Sin%20ti%CC%81tulo-2_page-0001.webp" alt="OCTANE redesign spread" style="width: 779px; aspect-ratio: 1650/2100; object-fit: cover; height: 1136px; overflow: visible">
+      </div>
+  </div>
+
+  <!-- PROJECT 6: BCN APP -->
+  <div id="work6" style="background:#031D44;color:#fff;padding:120px 0 100px;">
+    <div style="max-width:1160px;margin:0 auto;padding:0 32px;">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px;">
+        <div>
+          <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#70A288;margin-bottom:16px;">05 — Producto digital</div>
+          <div style="font-family:'Playfair Display',serif;font-size:clamp(40px,6vw,72px);line-height:1;color:#fff;">BCN App</div>
+          <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:20px;color:rgba(255,255,255,0.6);margin-top:10px;">Gastronomía mediterránea, diseño de producto digital</div>
+        </div>
+        <div style="display:flex;gap:40px;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Rol</div>
+            <div style="font-size:15px;">Diseño de producto<br>UI / prototipo</div>
+          </div>
+          <div>
+            <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Plataforma</div>
+            <div style="font-size:15px;">iOS — Liquid Glass</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:17px;line-height:1.8;color:rgba(255,255,255,0.75);max-width:760px;margin:0 0 56px;">
+        Las plataformas de delivery generalistas tratan Barcelona como un mercado más de su red global, homogeneizando la oferta y provocando fatiga de decisión. BCN App propone lo contrario: una curaduría editorial de cocina mediterránea por barrios, con una interfaz Liquid Glass que se siente premium sin perder calidez.
+      </p>
+
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:80px;align-items:start;">
+        <div style="display:flex;justify-content:center;">
+          <div style="position:relative;padding:8px;background:#111;border-radius:56px;box-shadow:0 40px 80px rgba(0,0,0,0.35);">
+            <div style="position:relative;width:390px;height:844px;border-radius:48px;overflow:hidden;background:#fff;">
+
+              <sc-if value="{{ tabInicio }}" hint-placeholder-val="{{ true }}">
+                <div class="bcn-scroll" style="width:100%;height:100%;overflow-y:auto;">
+                  <div style="position:relative;width:390px;">
+                    <x-import component="Recomendations" from="./bcn-app/screens.jsx" hint-size="390,2178"></x-import>
+                    <div onClick="{{ openSheet }}" style="position:absolute;left:20px;top:373px;width:349px;height:400px;cursor:pointer;"></div>
+                    <div onClick="{{ openSheet }}" style="position:absolute;left:20px;top:809px;width:349px;height:400px;cursor:pointer;"></div>
+                    <div onClick="{{ openSheet }}" style="position:absolute;left:20px;top:1245px;width:349px;height:400px;cursor:pointer;"></div>
+                    <div onClick="{{ openSheet }}" style="position:absolute;left:0px;top:130px;width:390px;height:170px;cursor:pointer;"></div>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ tabExplorar }}" hint-placeholder-val="{{ false }}">
+                <div class="bcn-scroll" style="width:100%;height:100%;overflow-y:auto;">
+                  <div style="position:relative;width:390px;">
+                    <x-import component="Mapa" from="./bcn-app/screens.jsx" hint-size="390,843"></x-import>
+                    <div onClick="{{ openSheet }}" style="position:absolute;left:22px;top:136px;width:340px;height:622px;cursor:pointer;"></div>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ tabSocial }}" hint-placeholder-val="{{ false }}">
+                <div class="bcn-scroll" style="width:100%;height:100%;overflow-y:auto;">
+                  <x-import component="Social" from="./bcn-app/screens.jsx" hint-size="390,2000"></x-import>
+                </div>
+              </sc-if>
+              <sc-if value="{{ tabGuardados }}" hint-placeholder-val="{{ false }}">
+                <div class="bcn-scroll" style="width:100%;height:100%;overflow-y:auto;">
+                  <x-import component="Favoritos" from="./bcn-app/screens.jsx" hint-size="390,900"></x-import>
+                </div>
+              </sc-if>
+              <sc-if value="{{ tabPerfil }}" hint-placeholder-val="{{ false }}">
+                <div class="bcn-scroll" style="width:100%;height:100%;overflow-y:auto;">
+                  <x-import component="AjustesIPhone14" from="./bcn-app/screens.jsx" hint-size="390,1876"></x-import>
+                </div>
+              </sc-if>
+
+              <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;background:rgba(0,0,0,0.35);transition:opacity 0.3s;opacity:{{ scrimOpacity }};pointer-events:{{ scrimPointer }};"></div>
+              <div class="bcn-scroll" style="position:absolute;left:5px;bottom:0;width:379px;height:560px;overflow-y:auto;border-radius:39px 39px 0 0;transition:transform 0.35s cubic-bezier(0.32,0.72,0,1);transform:{{ sheetTransform }};">
+                <x-import component="BottomSheetLocals" from="./bcn-app/screens.jsx" hint-size="379,551"></x-import>
+              </div>
+
+              <div style="position:absolute;left:11px;bottom:22px;width:368px;height:54px;border-radius:34px;background:rgba(0,0,0,0.57);display:flex;justify-content:space-around;align-items:center;">
+                <div onClick="{{ setTabSocial }}" style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:{{ navBg.social }};">
+                  <svg width="19" height="14" viewBox="0 0 19 14"><circle cx="5" cy="4" r="3.4" fill="none" stroke="{{ navIcon.social }}" stroke-width="1.5"></circle><circle cx="14" cy="4" r="3.4" fill="none" stroke="{{ navIcon.social }}" stroke-width="1.5"></circle><path d="M0 13c0-3 2.2-5 5-5s5 2 5 5M9 13c0-3 2.2-5 5-5s5 2 5 5" fill="none" stroke="{{ navIcon.social }}" stroke-width="1.5"></path></svg>
+                </div>
+                <div onClick="{{ setTabExplorar }}" style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:{{ navBg.explorar }};">
+                  <svg width="18" height="16" viewBox="0 0 18 16"><path d="M6 1 1 3v12l5-2 6 2 5-2V1l-5 2-6-2Z" fill="none" stroke="{{ navIcon.explorar }}" stroke-width="1.5" stroke-linejoin="round"></path><path d="M6 1v12M12 3v12" stroke="{{ navIcon.explorar }}" stroke-width="1.5"></path></svg>
+                </div>
+                <div onClick="{{ setTabInicio }}" style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:{{ navBg.inicio }};">
+                  <svg width="18" height="17" viewBox="0 0 18 17"><path d="M1 8 9 1l8 7M3 6v10h12V6" fill="none" stroke="{{ navIcon.inicio }}" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+                </div>
+                <div onClick="{{ setTabGuardados }}" style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:{{ navBg.guardados }};">
+                  <svg width="14" height="18" viewBox="0 0 14 18"><path d="M1 1h12v16l-6-4-6 4Z" fill="none" stroke="{{ navIcon.guardados }}" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+                </div>
+                <div onClick="{{ setTabPerfil }}" style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:{{ navBg.perfil }};">
+                  <svg width="16" height="17" viewBox="0 0 16 17"><circle cx="8" cy="4.5" r="3.5" fill="none" stroke="{{ navIcon.perfil }}" stroke-width="1.5"></circle><path d="M1 16c0-4 3-6.5 7-6.5s7 2.5 7 6.5" fill="none" stroke="{{ navIcon.perfil }}" stroke-width="1.5"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:14px;">Sistema de diseño</div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px;">
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:center;">
+              <div style="width:44px;height:44px;border-radius:8px;background:#031D44;"></div>
+              <div style="font-size:10.5px;color:rgba(255,255,255,0.5);">Prussian</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:center;">
+              <div style="width:44px;height:44px;border-radius:8px;background:#04395E;"></div>
+              <div style="font-size:10.5px;color:rgba(255,255,255,0.5);">Deep Space</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:center;">
+              <div style="width:44px;height:44px;border-radius:8px;background:#70A288;"></div>
+              <div style="font-size:10.5px;color:rgba(255,255,255,0.5);">Muted Teal</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:center;">
+              <div style="width:44px;height:44px;border-radius:8px;background:#DAB785;"></div>
+              <div style="font-size:10.5px;color:rgba(255,255,255,0.5);">Tan</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:center;">
+              <div style="width:44px;height:44px;border-radius:8px;background:#D80032;"></div>
+              <div style="font-size:10.5px;color:rgba(255,255,255,0.5);">Crimson</div>
+            </div>
+          </div>
+
+          <p style="font-size:16px;line-height:1.8;color:rgba(255,255,255,0.7);margin:0 0 20px;max-width:480px;">
+            Cinco pantallas — Inicio, Explorar, Social, Guardados y Perfil — construidas sobre un lenguaje Liquid Glass: superficies translúcidas con blur, bordes finos y una barra de navegación flotante que nunca interrumpe el contenido. Playfair Display aporta el carácter editorial en titulares; Inter resuelve la lectura en el cuerpo.
+          </p>
+          <div style="font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Herramientas</div>
+          <div style="font-size:15px;color:#fff;">Figma</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT / FOOTER -->
+  <div id="contact" style="border-top:1px solid oklch(85% 0.01 80);padding:80px 48px 60px;">
+    <div style="max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px;align-items:flex-end;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);color:oklch(20% 0.01 80);margin-bottom:12px;">Trabajemos juntos.</div>
+        <a href="mailto:hola@adriacarretero.com" style="font-size:16px;text-decoration:underline;">hola@adriacarretero.com</a>
+      </div>
+      <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:oklch(50% 0.02 80);text-align:right;">
+        Adrià Carretero<br>Creador &amp; artista visual<br>© 2026
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  videoRef = React.createRef();
+  videoRef2 = React.createRef();
+  sliderRef = React.createRef();
+  carouselRef = React.createRef();
+  state = { sliderPercent: 50, dragging: false, igIndex: 0, activeTab: 'inicio', sheetOpen: false };
+  componentDidMount() {
+    [this.videoRef, this.videoRef2].forEach((ref) => {
+      const v = ref.current;
+      if (v) {
+        v.muted = true;
+        v.play().catch(() => {});
+      }
+    });
+  }
+  updateSlider = (e) => {
+    const rect = this.sliderRef.current.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const pct = Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+    this.setState({ sliderPercent: pct });
+  };
+  onPointerDown = (e) => {
+    this.setState({ dragging: true });
+    this.updateSlider(e);
+  };
+  onPointerMove = (e) => {
+    if (this.state.dragging) this.updateSlider(e);
+  };
+  onPointerUp = () => this.setState({ dragging: false });
+  goToSlide = (i) => {
+    const clamped = Math.max(0, Math.min(5, i));
+    const el = this.carouselRef.current;
+    if (el) el.scrollTo({ left: clamped * el.clientWidth, behavior: 'smooth' });
+    this.setState({ igIndex: clamped });
+  };
+  prevSlide = () => this.goToSlide(this.state.igIndex - 1);
+  nextSlide = () => this.goToSlide(this.state.igIndex + 1);
+  setTab = (tab) => this.setState({ activeTab: tab, sheetOpen: false });
+  openSheet = () => this.setState({ sheetOpen: true });
+  closeSheet = () => this.setState({ sheetOpen: false });
+  isTab = (tab) => this.state.activeTab === tab;
+  renderVals() {
+    return {
+      videoRef: this.videoRef,
+      videoRef2: this.videoRef2,
+      sliderRef: this.sliderRef,
+      sliderPercent: this.state.sliderPercent,
+      beforeClip: `inset(0 ${100 - this.state.sliderPercent}% 0 0)`,
+      onPointerDown: this.onPointerDown,
+      onPointerMove: this.onPointerMove,
+      onPointerUp: this.onPointerUp,
+      carouselRef: this.carouselRef,
+      prevSlide: this.prevSlide,
+      nextSlide: this.nextSlide,
+      showPrevArrow: this.state.igIndex > 0,
+      showNextArrow: this.state.igIndex < 5,
+      igDots: [0, 1, 2, 3, 4, 5].map((i) => ({ color: i === this.state.igIndex ? '#111' : '#c8c8c8' })),
+      setTab: this.setTab,
+      setTabSocial: () => this.setTab('social'),
+      setTabExplorar: () => this.setTab('explorar'),
+      setTabInicio: () => this.setTab('inicio'),
+      setTabGuardados: () => this.setTab('guardados'),
+      setTabPerfil: () => this.setTab('perfil'),
+      openSheet: this.openSheet,
+      closeSheet: this.closeSheet,
+      sheetTransform: this.state.sheetOpen ? 'translateY(0)' : 'translateY(105%)',
+      scrimOpacity: this.state.sheetOpen ? 1 : 0,
+      scrimPointer: this.state.sheetOpen ? 'auto' : 'none',
+      tabInicio: this.state.activeTab === 'inicio',
+      tabExplorar: this.state.activeTab === 'explorar',
+      tabSocial: this.state.activeTab === 'social',
+      tabGuardados: this.state.activeTab === 'guardados',
+      tabPerfil: this.state.activeTab === 'perfil',
+      navBg: ['inicio', 'explorar', 'social', 'guardados', 'perfil'].reduce((acc, t) => {
+        acc[t] = this.state.activeTab === t ? '#70A288' : 'transparent';
+        return acc;
+      }, {}),
+      navIcon: ['inicio', 'explorar', 'social', 'guardados', 'perfil'].reduce((acc, t) => {
+        acc[t] = this.state.activeTab === t ? '#031D44' : 'rgba(255,255,255,0.75)';
+        return acc;
+      }, {}),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

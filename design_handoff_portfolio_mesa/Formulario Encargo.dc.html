@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#1c3350;}
+  ::selection{background:oklch(65% 0.13 75);color:#fff;}
+  a{color:#31435c;}
+  a:hover{color:oklch(65% 0.13 75);}
+</style>
+</helmet>
+
+<div style="position:relative;min-height:100vh;background:#1c3350 url('uploads/Untitled.png') center/{{ bgFit }};font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;padding:48px 20px;box-sizing:border-box;">
+
+  <!-- volver -->
+  <a href="Portfolio Mesa.dc.html" style="position:absolute;left:28px;top:24px;transform:rotate(-2deg);background:rgba(250,244,225,0.92);padding:8px 16px;box-shadow:0 6px 16px rgba(0,0,0,0.3);text-decoration:none;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:#31435c;">← Volver a la mesa</a>
+
+  <!-- hoja del formulario -->
+  <div style="position:relative;width:460px;max-width:100%;transform:rotate({{ paperTilt }}deg);background:#f7f3e8;border-radius:2px;box-shadow:0 24px 60px rgba(0,0,0,0.45);padding:36px 38px 32px;box-sizing:border-box;">
+    <div style="position:absolute;left:50%;top:-11px;transform:translateX(-50%) rotate(1.5deg);width:96px;height:24px;background:rgba(255,255,255,0.5);box-shadow:0 1px 2px rgba(0,0,0,0.1);"></div>
+
+    <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a7c5e;">FORMULARIO DE ENCARGO</div>
+    <div style="font-weight:800;font-size:32px;line-height:1;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:12px;">Cuéntame tu proyecto</div>
+    <sc-if value="{{ showAvailability }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:8px;margin-top:14px;">
+        <div style="width:9px;height:9px;border-radius:50%;background:#5d9e6d;flex:none;"></div>
+        <div style="font-size:13px;font-weight:600;color:#1e2733;">Disponible para encargos</div>
+        <div style="font-size:11.5px;color:#8a7c5e;">· Presencial BCN · remoto · &lt; 24 h</div>
+      </div>
+    </sc-if>
+
+    <div style="border-top:1px solid #ddd3ba;margin-top:18px;padding-top:18px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;gap:12px;">
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;">
+          <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TU NOMBRE</span>
+          <input ref="{{ formNameRef }}" placeholder="Nombre" style="font-size:13px;padding:10px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;">
+        </label>
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;">
+          <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TU EMAIL</span>
+          <input ref="{{ formMailRef }}" type="email" placeholder="tu@email.com" style="font-size:13px;padding:10px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;">
+        </label>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:5px;">
+        <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TIPO DE PROYECTO</span>
+        <select ref="{{ formTypeRef }}" style="font-size:13px;padding:10px 8px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;">
+          <option>Branding</option>
+          <option>Editorial / cartel</option>
+          <option>Motion</option>
+          <option>Producto digital</option>
+          <option>Otro</option>
+        </select>
+      </label>
+      <label style="display:flex;flex-direction:column;gap:5px;">
+        <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">EL PROYECTO</span>
+        <textarea ref="{{ formMsgRef }}" placeholder="¿Qué necesitas? Dos líneas bastan." rows="5" style="resize:none;font-size:13px;padding:10px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea>
+      </label>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div onClick="{{ formSend }}" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 22px;background:{{ accentColor }};color:#f7f3e8;border-radius:3px;cursor:pointer;" style-hover="filter:brightness(1.3);">Enviar →</div>
+        <div style="font-size:10.5px;color:#8a7c5e;max-width:220px;line-height:1.4;">{{ formHint }}</div>
+      </div>
+    </div>
+
+    <div style="font-family:'Caveat',cursive;font-size:20px;color:#31435c;margin-top:20px;">¿hacemos algo juntos?</div>
+    <div style="position:absolute;right:14px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">adria.carreteromunoz@gmail.com</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1e2733&quot;,&quot;options&quot;:[&quot;#1e2733&quot;,&quot;#31435c&quot;,&quot;#a3777d&quot;,&quot;#8a7c5e&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Estilo&quot;},&quot;paperTilt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:-0.8,&quot;min&quot;:-4,&quot;max&quot;:4,&quot;step&quot;:0.2,&quot;unit&quot;:&quot;deg&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Estilo&quot;},&quot;bgFit&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;cover&quot;,&quot;options&quot;:[&quot;cover&quot;,&quot;contain&quot;,&quot;100% 100%&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Fondo&quot;},&quot;showAvailability&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenido&quot;}}">
+class Component extends DCLogic {
+  state = { sent: false };
+  formNameRef = React.createRef();
+  formMailRef = React.createRef();
+  formTypeRef = React.createRef();
+  formMsgRef = React.createRef();
+  renderVals() {
+    return {
+      bgFit: this.props.bgFit ?? 'cover',
+      paperTilt: this.props.paperTilt ?? -0.8,
+      accentColor: this.props.accentColor ?? '#1e2733',
+      showAvailability: this.props.showAvailability ?? true,
+      formNameRef: this.formNameRef,
+      formMailRef: this.formMailRef,
+      formTypeRef: this.formTypeRef,
+      formMsgRef: this.formMsgRef,
+      formHint: this.state.sent ? 'Se ha abierto tu correo con el mensaje listo — solo dale a enviar.' : 'Se abre tu correo con el mensaje ya redactado.',
+      formSend: () => {
+        const name = (this.formNameRef.current?.value || '').trim();
+        const mail = (this.formMailRef.current?.value || '').trim();
+        const type = this.formTypeRef.current?.value || 'Proyecto';
+        const msg = (this.formMsgRef.current?.value || '').trim();
+        const subject = encodeURIComponent(`Encargo · ${type}${name ? ' — ' + name : ''}`);
+        const body = encodeURIComponent(`Hola Adrià,\n\n${msg || '(cuéntame tu proyecto aquí)'}\n\n— ${name || ''}${mail ? '\n' + mail : ''}`);
+        window.location.href = `mailto:adria.carreteromunoz@gmail.com?subject=${subject}&body=${body}`;
+        this.setState({ sent: true });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

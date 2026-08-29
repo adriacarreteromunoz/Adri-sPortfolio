@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<style>
+  body{margin:0;background:#cbb08a;}
+  @keyframes none-pf{from{opacity:1}to{opacity:1}}
+  ::selection{background:oklch(65% 0.13 75);color:#fff;}
+  a{color:#31435c;}
+  a:hover{color:oklch(65% 0.13 75);}
+  .bcn-scroll::-webkit-scrollbar{display:none;}
+  .pf-book .page{display:none;pointer-events:auto;}
+  .pf-book .page:first-child{display:block;position:absolute;left:300px;top:0;width:300px;height:390px;}
+  .pf-wide .page:first-child{left:356px;width:356px;height:211px;}
+</style>
+</helmet>
+
+<div style="position:relative;width:100vw;height:{{ deskH }};min-height:820px;overflow:{{ deskOverflow }};background-color:#c9ae87;background-image:repeating-linear-gradient(73deg, rgba(120,88,54,0.055) 0 1px, transparent 1px 3px), repeating-linear-gradient(163deg, rgba(120,88,54,0.045) 0 1px, transparent 1px 4px), repeating-linear-gradient(17deg, rgba(255,246,228,0.06) 0 1px, transparent 1px 5px), radial-gradient(ellipse 60% 45% at 22% 18%, rgba(214,190,158,0.5), transparent 70%), radial-gradient(ellipse 70% 50% at 80% 82%, rgba(163,131,94,0.28), transparent 72%);user-select:none;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Helvetica,sans-serif;touch-action:{{ deskTouch }};">
+
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 70% at 50% 22%, rgba(255,244,214,0.3), transparent 58%), radial-gradient(ellipse 130% 110% at 50% 50%, transparent 52%, rgba(86,58,30,0.26) 100%);pointer-events:none;z-index:0;"></div>
+  <div style="position:absolute;right:12%;bottom:9%;width:96px;height:96px;border-radius:50%;border:11px solid rgba(92,58,28,0.2);pointer-events:none;z-index:0;filter:blur(0.6px);"></div>
+  <div style="position:absolute;right:calc(12% - 10px);bottom:calc(9% + 22px);width:96px;height:96px;border-radius:50%;border:5px solid rgba(92,58,28,0.12);pointer-events:none;z-index:0;filter:blur(0.8px);"></div>
+
+  <div style="position:absolute;left:50%;top:22px;transform:translateX(-50%) rotate(-1deg);background:#f7f3e8;padding:10px 26px;box-shadow:0 2px 6px rgba(0,0,0,0.22), 0 10px 24px rgba(0,0,0,0.34);z-index:8;">
+    <div style="position:absolute;left:-18px;top:-8px;width:52px;height:18px;background:rgba(255,255,255,0.45);transform:rotate(-38deg);box-shadow:0 1px 2px rgba(0,0,0,0.1);"></div>
+    <div style="position:absolute;right:-18px;top:-8px;width:52px;height:18px;background:rgba(255,255,255,0.45);transform:rotate(38deg);box-shadow:0 1px 2px rgba(0,0,0,0.1);"></div>
+    <div style="font-size:13px;letter-spacing:0.26em;text-transform:uppercase;color:#31435c;font-weight:700;">Adrià Carretero</div>
+    <div style="font-size:12px;color:#8a7c5e;text-align:center;margin-top:3px;letter-spacing:0.06em;">mesa de trabajo</div>
+  </div>
+
+  <div style="display:{{ helpDisplay }};position:absolute;left:28px;top:24px;transform:rotate(-3deg);background:#fbf7ea;padding:14px 18px 12px;max-width:225px;box-shadow:0 2px 6px rgba(0,0,0,0.22), 0 12px 28px rgba(0,0,0,0.34);z-index:8;">
+    <div style="position:absolute;left:50%;top:-9px;transform:translateX(-50%) rotate(2deg);width:64px;height:18px;background:rgba(255,255,255,0.5);box-shadow:0 1px 2px rgba(0,0,0,0.1);"></div>
+    <div style="font-family:'Caveat',cursive;font-size:20px;line-height:1.25;color:#31435c;">Arrastra los dosieres. Esquina derecha: pasar página · izquierda: volver · ⤢ maximiza.</div>
+  </div>
+
+  <div onClick="{{ toggleTidy }}" style="display:{{ tidyDisplay }};position:absolute;right:28px;top:28px;transform:rotate(2deg);background:rgba(250,244,225,0.92);padding:8px 16px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,0.3);z-index:8;border:1px dashed #b3a582;" style-hover="background:#ffffff;">
+    <div style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#31435c;font-weight:700;">{{ tidyLabel }}</div>
+  </div>
+
+  <div onClick="{{ closeMax }}" style="position:absolute;inset:0;background:rgba(6,16,30,0.55);z-index:9998;opacity:{{ scrimOpacity }};pointer-events:{{ scrimPointer }};transition:opacity 0.3s;"></div>
+
+  <div style="display:{{ lbDisplay }};position:fixed;inset:0;z-index:10000;background:rgba(20,12,4,0.88);">
+    <div onClick="{{ lbClose }}" style="position:absolute;inset:0;cursor:zoom-out;"></div>
+    <div class="bcn-scroll" style="position:absolute;left:0;right:0;top:56px;bottom:56px;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:0 24px;">
+      <canvas ref="{{ lbCanvasRef }}" style="display:block;width:{{ lbWidth }};height:auto;box-shadow:0 24px 60px rgba(0,0,0,0.5);background:#fff;"></canvas>
+    </div>
+    <div style="position:absolute;left:0;right:0;top:0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;">
+      <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#e9e0cc;">{{ lbTitle }}</div>
+      <div onClick="{{ lbClose }}" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(233,224,204,0.4);color:#e9e0cc;font-size:14px;" style-hover="background:rgba(255,255,255,0.12);">✕</div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;justify-content:center;gap:10px;">
+      <div onClick="{{ lbPrev }}" style="min-width:34px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(233,224,204,0.4);color:#e9e0cc;font-size:12px;" style-hover="background:rgba(255,255,255,0.12);">◀</div>
+      <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:11px;color:#e9e0cc;min-width:74px;text-align:center;">{{ lbLabel }}</div>
+      <div onClick="{{ lbNext }}" style="min-width:34px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(233,224,204,0.4);color:#e9e0cc;font-size:12px;" style-hover="background:rgba(255,255,255,0.12);">▶</div>
+      <div onClick="{{ lbZoomOut }}" style="min-width:34px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(233,224,204,0.4);color:#e9e0cc;font-size:14px;margin-left:14px;" style-hover="background:rgba(255,255,255,0.12);">−</div>
+      <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:11px;color:#e9e0cc;min-width:46px;text-align:center;">{{ lbZoomLabel }}</div>
+      <div onClick="{{ lbZoomIn }}" style="min-width:34px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(233,224,204,0.4);color:#e9e0cc;font-size:14px;" style-hover="background:rgba(255,255,255,0.12);">+</div>
+    </div>
+  </div>
+
+  <!-- DOSIER 01 · PRIORITY CLUB -->
+  <div data-screen-label="Dosier 01" onPointerDown="{{ pc.down }}" style="position:absolute;left:{{ pc.x }}px;top:{{ pc.y }}px;z-index:{{ pc.z }};width:356px;height:211px;transform:rotate({{ pc.r }}deg) scale({{ pc.s }});cursor:{{ pc.cursor }};transition:{{ pc.move }};">
+    <div style="position:absolute;top:-15px;left:16px;width:128px;height:16px;background:#c99f68;border-radius:5px 5px 0 0;display:flex;align-items:center;padding:0 10px;"><span style="font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:#7a5c33;font-weight:700;">01 · Branding</span></div>
+    <div style="position:absolute;inset:0;background:#c99f68;border-radius:5px;box-shadow:0 3px 8px rgba(0,0,0,0.28), 0 22px 48px rgba(0,0,0,0.42);"></div>
+    <div style="position:absolute;left:-356px;top:0;width:356px;height:211px;background:#b8905c;border-radius:5px 0 0 5px;box-shadow:-4px 6px 12px rgba(0,0,0,0.2), -18px 24px 48px rgba(0,0,0,0.38);opacity:{{ pc.openOp }};transition:opacity 0.3s;pointer-events:none;"></div>
+    <div style="position:absolute;left:-356px;top:0;width:712px;height:211px;pointer-events:none;">
+      <div ref="{{ pc.book }}" class="pf-book pf-wide" style="position:relative;width:712px;height:211px;">
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:5px;"></div>
+          <div style="position:absolute;inset:8px;background:#f7f3e8;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">DOSIER 01 — BRANDING</div>
+            <div style="font-weight:800;font-size:26px;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:8px;">Priority Club</div>
+            <div style="font-size:11px;color:#5c6572;margin-top:6px;">Streetwear · estética Y2K</div>
+            <div style="position:absolute;bottom:14px;left:18px;right:18px;border-top:1px solid #ddd3ba;padding-top:8px;display:flex;flex-direction:column;gap:2px;">
+              <div style="font-size:9.5px;color:#8a7c5e;">Logo + identidad de marca</div>
+              <div style="font-size:9.5px;color:#8a7c5e;">Photoshop · After Effects · Illustrator</div>
+            </div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:14px 16px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL ENCARGO</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0 0 9px;">Identidad completa para una marca de streetwear con estética Y2K: logotipo, versión animada y un sistema gráfico que sobreviva tanto en prenda como en redes.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">LA DECISIÓN</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0;">Una estrella fugaz como símbolo. La estela comunica velocidad y ambición — una comunidad que corre por delante — y deja un trazo natural para animar la construcción del logo en After Effects.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:12px;box-sizing:border-box;display:flex;align-items:center;gap:12px;">
+              <div style="background:#ffffff;box-shadow:0 4px 14px rgba(0,0,0,0.12);padding:6px;height:100%;box-sizing:border-box;">
+                <video ref="{{ videoRef }}" src="uploads/Logo Assembly 768x768.mp4" autoplay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsinline="{{ true }}" style="display:block;height:100%;width:auto;aspect-ratio:1/1;object-fit:cover;"></video>
+              </div>
+              <div style="font-family:'Caveat',cursive;font-size:17px;color:#31435c;">logo animado&nbsp;</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">01 · 1/2</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:14px 16px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL RESULTADO</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0 0 9px;">Un logotipo que funciona igual bordado en la etiqueta de una prenda que en movimiento en un reel: reconocible incluso a 32 píxeles, con una estela que da juego para animar cada lanzamiento.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL SISTEMA</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0;">Mayúsculas condensadas, contraste duro blanco/negro y la estrella como único ornamento. Nada decorativo: todo lo que aparece se puede bordar, serigrafiar o animar.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:14px 16px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 8px;">APLICACIÓN — REPETICIÓN</div>
+                <div style="font-weight:800;font-size:22px;line-height:0.94;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;">Priority Club</div>
+                <div style="font-weight:800;font-size:22px;line-height:0.94;letter-spacing:-0.02em;text-transform:uppercase;color:rgba(30,39,51,0.42);">Priority Club</div>
+                <div style="font-weight:800;font-size:22px;line-height:0.94;letter-spacing:-0.02em;text-transform:uppercase;color:rgba(30,39,51,0.16);">Priority Club</div>
+              </div>
+              <div style="font-family:'Caveat',cursive;font-size:15px;color:#31435c;">la marca aguanta la repetición — test de etiqueta</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">01 · 2/2</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp1 }}" onClick="{{ openM1 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 1 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp2 }}" onClick="{{ openM2 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 2 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp3 }}" onClick="{{ openM3 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 3 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp4 }}" onClick="{{ openM4 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 4 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp5 }}" onClick="{{ openM5 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 5 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp6 }}" onClick="{{ openM6 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 6 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp7 }}" onClick="{{ openM7 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 7 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp8 }}" onClick="{{ openM8 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 8 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp9 }}" onClick="{{ openM9 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 9 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp10 }}" onClick="{{ openM10 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 10 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp11 }}" onClick="{{ openM11 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 11 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp12 }}" onClick="{{ openM12 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 12 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp13 }}" onClick="{{ openM13 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 13 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp14 }}" onClick="{{ openM14 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 14 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp15 }}" onClick="{{ openM15 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 15 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp16 }}" onClick="{{ openM16 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 16 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <img src="uploads/Captura de pantalla 2026-08-29 a las 21.03.00.png" alt="Variants de logo" draggable="{{ false }}" onClick="{{ openImgNew }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;">
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 17 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp17 }}" onClick="{{ openM17 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 18 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp18 }}" onClick="{{ openM18 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 19 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp19 }}" onClick="{{ openM19 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 20 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp20 }}" onClick="{{ openM20 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 21 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <img src="uploads/Captura de pantalla 2026-08-29 a las 20.15.30.png" alt="Estil fotogràfic" draggable="{{ false }}" onClick="{{ openM21 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;">
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 22 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp22 }}" onClick="{{ openM22 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 23 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp23 }}" onClick="{{ openM23 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 24 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp24 }}" onClick="{{ openM24 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 25 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp25 }}" onClick="{{ openM25 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 26 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp26 }}" onClick="{{ openM26 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 27 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp27 }}" onClick="{{ openM27 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 28 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp28 }}" onClick="{{ openM28 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 29 / 30</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c99f68;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ pcp29 }}" onClick="{{ openM29 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 30 / 30</div>
+          </div>
+        </div>
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b8905c;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'Caveat',cursive;font-size:17px;color:#8a7c5e;">— fin del dosier —</div></div>
+        </div>
+      </div>
+    </div>
+    <div onPointerDown="{{ pc.prev }}" title="Página anterior" style="position:absolute;left:-346px;bottom:8px;width:36px;height:36px;cursor:pointer;z-index:12;opacity:{{ pc.prevOp }};pointer-events:{{ pc.prevPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom left;"><div style="position:absolute;left:0;bottom:0;width:0;height:0;border-bottom:34px solid #e6dfc9;border-right:34px solid transparent;filter:drop-shadow(3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ pc.next }}" title="Pasar página" style="position:absolute;right:8px;bottom:8px;width:36px;height:36px;cursor:pointer;z-index:12;opacity:{{ pc.nextOp }};pointer-events:{{ pc.nextPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom right;"><div style="position:absolute;right:0;bottom:0;width:0;height:0;border-bottom:34px solid #eae3cf;border-left:34px solid transparent;filter:drop-shadow(-3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ pc.max }}" title="Maximizar" style="position:absolute;right:12px;top:10px;width:26px;height:26px;cursor:pointer;z-index:12;display:flex;align-items:center;justify-content:center;" style-hover="transform:scale(1.15);"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M8 1h5v5M6 13H1V8M13 1 8.5 5.5M1 13l4.5-4.5" stroke="#7a6c4e" stroke-width="1.6" fill="none" stroke-linecap="round"></path></svg></div>
+  </div>
+
+  <!-- DOSIER 02 · SEVERANCE -->
+  <div data-screen-label="Dosier 02" onPointerDown="{{ sev.down }}" style="position:absolute;left:{{ sev.x }}px;top:{{ sev.y }}px;z-index:{{ sev.z }};width:300px;height:390px;transform:rotate({{ sev.r }}deg) scale({{ sev.s }});cursor:{{ sev.cursor }};transition:{{ sev.move }};">
+    <div style="position:absolute;top:-15px;left:16px;width:128px;height:16px;background:#bfa06f;border-radius:5px 5px 0 0;display:flex;align-items:center;padding:0 10px;"><span style="font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:#71592f;font-weight:700;">02 · Editorial</span></div>
+    <div style="position:absolute;inset:0;background:#bfa06f;border-radius:5px;box-shadow:0 3px 8px rgba(0,0,0,0.28), 0 22px 48px rgba(0,0,0,0.42);"></div>
+    <div style="position:absolute;left:-300px;top:0;width:300px;height:390px;background:#b2935f;border-radius:5px 0 0 5px;box-shadow:-4px 6px 12px rgba(0,0,0,0.2), -18px 24px 48px rgba(0,0,0,0.38);opacity:{{ sev.openOp }};transition:opacity 0.3s;pointer-events:none;"></div>
+    <div style="position:absolute;left:-300px;top:0;width:600px;height:390px;pointer-events:none;">
+      <div ref="{{ sev.book }}" class="pf-book" style="position:relative;width:600px;height:390px;">
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#bfa06f;border-radius:5px;"></div>
+          <div style="position:absolute;inset:10px;background:#f7f3e8;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">DOSIER 02 — CARTEL</div>
+            <div style="font-weight:800;font-size:34px;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:14px;">Severance</div>
+            <div style="font-size:13px;color:#5c6572;margin-top:10px;">Rediseño — Estilo Tipográfico Internacional</div>
+            <div style="position:absolute;bottom:22px;left:22px;right:22px;border-top:1px solid #ddd3ba;padding-top:12px;display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:11px;color:#8a7c5e;">Dirección tipográfica</div>
+              <div style="font-size:11px;color:#8a7c5e;">Adobe Illustrator</div>
+            </div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b2935f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:18px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 8px;">EL PUNTO DE PARTIDA</div>
+            <img src="uploads/713MTIICuTL._AC_UF350,350_QL80_.jpg" alt="Cartel original" draggable="{{ false }}" style="display:block;width:150px;height:196px;object-fit:cover;box-shadow:0 4px 12px rgba(0,0,0,0.2);transform:rotate(-2deg);margin:4px 0 12px;">
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">El cartel original vende misterio de prestigio: oscuridad, rostro dividido, serifa elegante. Comunica «drama premium», pero no dice nada del mundo de la serie.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#bfa06f;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:16px;box-sizing:border-box;">
+              <img src="uploads/SEVERANCE.png" alt="Rediseño Severance" draggable="{{ false }}" style="display:block;width:227px;height:301px;object-fit:contain;box-shadow:0 4px 14px rgba(0,0,0,0.15);position:absolute;left:28px;top:60px;"><div style="font-family:'Caveat',cursive;font-size:19px;color:#31435c;margin-top:10px;text-align:center;">el rediseño — como lo vería Lumon</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">02 · 1/2</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b2935f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">EL GIRO</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0 0 16px;">En lugar de vender la serie desde fuera, el rediseño la cuenta desde dentro de Lumon: retícula estricta, mayúsculas, un único acento de color. El cartel como documento corporativo — el horror está en el orden.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">POR QUÉ FUNCIONA</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">El Estilo Tipográfico Internacional nació para transmitir neutralidad y eficiencia: exactamente lo que Lumon finge ser. La forma es el mensaje.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#bfa06f;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:16px;box-sizing:border-box;">
+              <img src="uploads/SEVERANCE.png" alt="Detalle tipográfico" draggable="{{ false }}" style="display:block;width:238px;height:317px;object-fit:cover;object-position:top center;box-shadow:0 4px 14px rgba(0,0,0,0.15);"><div style="font-family:'Caveat',cursive;font-size:18px;color:#31435c;margin-top:10px;text-align:center;">detalle — jerarquía y retícula</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">02 · 2/2</div>
+          </div>
+        </div>
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b2935f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'Caveat',cursive;font-size:20px;color:#8a7c5e;">— fin del dosier —</div></div>
+        </div>
+      </div>
+    </div>
+    <div onPointerDown="{{ sev.prev }}" title="Página anterior" style="position:absolute;left:-290px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ sev.prevOp }};pointer-events:{{ sev.prevPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom left;"><div style="position:absolute;left:0;bottom:0;width:0;height:0;border-bottom:46px solid #e6dfc9;border-right:46px solid transparent;filter:drop-shadow(3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ sev.next }}" title="Pasar página" style="position:absolute;right:10px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ sev.nextOp }};pointer-events:{{ sev.nextPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom right;"><div style="position:absolute;right:0;bottom:0;width:0;height:0;border-bottom:46px solid #eae3cf;border-left:46px solid transparent;filter:drop-shadow(-3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ sev.max }}" title="Maximizar" style="position:absolute;right:16px;top:16px;width:32px;height:32px;cursor:pointer;z-index:12;display:flex;align-items:center;justify-content:center;" style-hover="transform:scale(1.15);"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M8 1h5v5M6 13H1V8M13 1 8.5 5.5M1 13l4.5-4.5" stroke="#7a6c4e" stroke-width="1.6" fill="none" stroke-linecap="round"></path></svg></div>
+  </div>
+
+  <!-- DOSIER 03 · SOLELL RRSS -->
+  <div data-screen-label="Dosier 03" onPointerDown="{{ rrss.down }}" style="position:absolute;left:{{ rrss.x }}px;top:{{ rrss.y }}px;z-index:{{ rrss.z }};width:300px;height:390px;transform:rotate({{ rrss.r }}deg) scale({{ rrss.s }});cursor:{{ rrss.cursor }};transition:{{ rrss.move }};">
+    <div style="position:absolute;top:-15px;left:16px;width:128px;height:16px;background:#c9a875;border-radius:5px 5px 0 0;display:flex;align-items:center;padding:0 10px;"><span style="font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:#7a5f36;font-weight:700;">03 · Social</span></div>
+    <div style="position:absolute;inset:0;background:#c9a875;border-radius:5px;box-shadow:0 3px 8px rgba(0,0,0,0.28), 0 22px 48px rgba(0,0,0,0.42);"></div>
+    <div style="position:absolute;left:-300px;top:0;width:300px;height:390px;background:#bd9c66;border-radius:5px 0 0 5px;box-shadow:-4px 6px 12px rgba(0,0,0,0.2), -18px 24px 48px rgba(0,0,0,0.38);opacity:{{ rrss.openOp }};transition:opacity 0.3s;pointer-events:none;"></div>
+    <div style="position:absolute;left:-300px;top:0;width:600px;height:390px;pointer-events:none;">
+      <div ref="{{ rrss.book }}" class="pf-book" style="position:relative;width:600px;height:390px;">
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c9a875;border-radius:5px;"></div>
+          <div style="position:absolute;inset:10px;background:#f7f3e8;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">DOSIER 03 — RRSS</div>
+            <div style="font-weight:800;font-size:34px;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:14px;">Solell Jewelry</div>
+            <div style="font-size:13px;color:#5c6572;margin-top:10px;">Carrusel de Instagram · Barcelona</div>
+            <div style="position:absolute;bottom:22px;left:22px;right:22px;border-top:1px solid #ddd3ba;padding-top:12px;display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:11px;color:#8a7c5e;">Contenido social · joyería maximalista</div>
+              <div style="font-size:11px;color:#8a7c5e;">ChatGPT · Photoshop</div>
+            </div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#bd9c66;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">EL ENCARGO</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0 0 16px;">Contenido de Instagram para una joyería maximalista de Barcelona. El reto: transmitir lujo artesanal con presupuesto cero de producción fotográfica.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">LA ESTRATEGIA</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">Un carrusel que se comporta como un editorial de moda en miniatura: la primera imagen debe funcionar sola como portada del feed y ganarse el deslizamiento.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c9a875;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:16px;box-sizing:border-box;position:relative;">
+              <img src="uploads/Post_rrss_Mesa de trabajo 1.png" alt="Portada carrusel" draggable="{{ false }}" style="display:block;width:180px;height:225px;object-fit:cover;box-shadow:0 6px 16px rgba(0,0,0,0.2);transform:rotate(-2deg);position:absolute;left:18px;top:20px;">
+              <img src="uploads/small/chatgpt-15_08_39.jpg" alt="Foto campaña" draggable="{{ false }}" style="display:block;width:140px;height:175px;object-fit:cover;box-shadow:0 6px 16px rgba(0,0,0,0.2);transform:rotate(4deg);position:absolute;right:14px;bottom:44px;">
+              <div style="font-family:'Caveat',cursive;font-size:18px;color:#31435c;position:absolute;left:20px;bottom:14px;">portada + campaña</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">03 · 1/2</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#bd9c66;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">EL RITMO</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0 0 16px;">Cinco deslizamientos deliberados: abre el gesto (mano y anillos), respiran paisaje y producto, y cierra el momento social. Cada imagen aguanta sola, pero el orden cuenta una historia.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">LA PRODUCCIÓN</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">Sin presupuesto de shooting: fotografía generada con IA y corregida en Photoshop para unificar luz, grano y color entre las cinco piezas.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#c9a875;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:16px;box-sizing:border-box;">
+              <img src="uploads/small/chatgpt-13_32_05.jpg" alt="Pieza de campaña" draggable="{{ false }}" style="display:block;width:100%;height:300px;object-fit:cover;box-shadow:0 4px 14px rgba(0,0,0,0.15);">
+              <div style="font-family:'Caveat',cursive;font-size:18px;color:#31435c;margin-top:10px;text-align:center;">el cierre del carrusel — momento social</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">03 · 2/2</div>
+          </div>
+        </div>
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#bd9c66;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'Caveat',cursive;font-size:20px;color:#8a7c5e;">— fin del dosier —</div></div>
+        </div>
+      </div>
+    </div>
+    <div onPointerDown="{{ rrss.prev }}" title="Página anterior" style="position:absolute;left:-290px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ rrss.prevOp }};pointer-events:{{ rrss.prevPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom left;"><div style="position:absolute;left:0;bottom:0;width:0;height:0;border-bottom:46px solid #e6dfc9;border-right:46px solid transparent;filter:drop-shadow(3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ rrss.next }}" title="Pasar página" style="position:absolute;right:10px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ rrss.nextOp }};pointer-events:{{ rrss.nextPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom right;"><div style="position:absolute;right:0;bottom:0;width:0;height:0;border-bottom:46px solid #eae3cf;border-left:46px solid transparent;filter:drop-shadow(-3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ rrss.max }}" title="Maximizar" style="position:absolute;right:16px;top:16px;width:32px;height:32px;cursor:pointer;z-index:12;display:flex;align-items:center;justify-content:center;" style-hover="transform:scale(1.15);"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M8 1h5v5M6 13H1V8M13 1 8.5 5.5M1 13l4.5-4.5" stroke="#7a6c4e" stroke-width="1.6" fill="none" stroke-linecap="round"></path></svg></div>
+  </div>
+
+  <!-- DOSIER 04 · MAGAZINE -->
+  <div data-screen-label="Dosier 04" onPointerDown="{{ mag.down }}" style="position:absolute;left:{{ mag.x }}px;top:{{ mag.y }}px;z-index:{{ mag.z }};width:300px;height:390px;transform:rotate({{ mag.r }}deg) scale({{ mag.s }});cursor:{{ mag.cursor }};transition:{{ mag.move }};">
+    <div style="position:absolute;top:-15px;left:16px;width:128px;height:16px;background:#b09468;border-radius:5px 5px 0 0;display:flex;align-items:center;padding:0 10px;"><span style="font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:#68512c;font-weight:700;">04 · Editorial</span></div>
+    <div style="position:absolute;inset:0;background:#b09468;border-radius:5px;box-shadow:0 3px 8px rgba(0,0,0,0.28), 0 22px 48px rgba(0,0,0,0.42);"></div>
+    <div style="position:absolute;left:-300px;top:0;width:300px;height:390px;background:#a4885d;border-radius:5px 0 0 5px;box-shadow:-4px 6px 12px rgba(0,0,0,0.2), -18px 24px 48px rgba(0,0,0,0.38);opacity:{{ mag.openOp }};transition:opacity 0.3s;pointer-events:none;"></div>
+    <div style="position:absolute;left:-300px;top:0;width:600px;height:390px;pointer-events:none;">
+      <div ref="{{ mag.book }}" class="pf-book" style="position:relative;width:600px;height:390px;">
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b09468;border-radius:5px;"></div>
+          <div style="position:absolute;inset:10px;background:#f7f3e8;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">DOSIER 04 — REVISTA</div>
+            <div style="font-weight:800;font-size:34px;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:14px;">Octane Redesign</div>
+            <div style="font-size:13px;color:#5c6572;margin-top:10px;">De editorial clásico a brutalista</div>
+            <div style="position:absolute;bottom:22px;left:22px;right:22px;border-top:1px solid #ddd3ba;padding-top:12px;display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:11px;color:#8a7c5e;">Duración: 1–7 días</div>
+              <div style="font-size:11px;color:#8a7c5e;">Photoshop · Blender · Procreate</div>
+            </div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#a4885d;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">EL ENCARGO</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0 0 16px;">Rediseñar la revista OCTANE como ejercicio intensivo de una semana: llevarla del editorial clásico al brutalismo sin perder la identidad de la cabecera.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">EL LÍMITE</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">Entre 1 y 7 días de plazo. La restricción de tiempo obligó a decidir rápido y a defender cada decisión: no hay una sola página «segura».</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b09468;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:16px;box-sizing:border-box;position:relative;">
+              <img src="uploads/Ilustración_sin_título.webp" alt="Portada OCTANE" draggable="{{ false }}" style="display:block;width:170px;height:216px;object-fit:cover;box-shadow:0 6px 16px rgba(0,0,0,0.2);transform:rotate(-2deg);position:absolute;left:18px;top:20px;">
+              <img src="uploads/Sin título-2_page-0001.webp" alt="Interior OCTANE" draggable="{{ false }}" style="display:block;width:150px;height:190px;object-fit:cover;box-shadow:0 6px 16px rgba(0,0,0,0.2);transform:rotate(3deg);position:absolute;right:12px;bottom:40px;">
+              <div style="font-family:'Caveat',cursive;font-size:18px;color:#31435c;position:absolute;left:20px;bottom:12px;">portada + interior</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">04 · 1/2</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#a4885d;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">LA DECISIÓN</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0 0 16px;">Tratar la tipografía como imagen: cuerpos enormes, una retícula que se rompe con intención y aperturas de sección modeladas en 3D con Blender.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">EL RESULTADO</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">Cada pliego alterna orden y ruptura, manteniendo la esencia de la cabecera original. Una revista que pide ser hojeada, no solo leída.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#b09468;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:16px;box-sizing:border-box;">
+              <img src="uploads/Sin título-2_page-0001.webp" alt="Interior OCTANE" draggable="{{ false }}" style="display:block;width:100%;height:300px;object-fit:cover;object-position:top center;box-shadow:0 4px 14px rgba(0,0,0,0.15);">
+              <div style="font-family:'Caveat',cursive;font-size:18px;color:#31435c;margin-top:10px;text-align:center;">pliego interior — estructura y ruptura</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">04 · 2/2</div>
+          </div>
+        </div>
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#a4885d;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'Caveat',cursive;font-size:20px;color:#8a7c5e;">— fin del dosier —</div></div>
+        </div>
+      </div>
+    </div>
+    <div onPointerDown="{{ mag.prev }}" title="Página anterior" style="position:absolute;left:-290px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ mag.prevOp }};pointer-events:{{ mag.prevPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom left;"><div style="position:absolute;left:0;bottom:0;width:0;height:0;border-bottom:46px solid #e6dfc9;border-right:46px solid transparent;filter:drop-shadow(3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ mag.next }}" title="Pasar página" style="position:absolute;right:10px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ mag.nextOp }};pointer-events:{{ mag.nextPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom right;"><div style="position:absolute;right:0;bottom:0;width:0;height:0;border-bottom:46px solid #eae3cf;border-left:46px solid transparent;filter:drop-shadow(-3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ mag.max }}" title="Maximizar" style="position:absolute;right:16px;top:16px;width:32px;height:32px;cursor:pointer;z-index:12;display:flex;align-items:center;justify-content:center;" style-hover="transform:scale(1.15);"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M8 1h5v5M6 13H1V8M13 1 8.5 5.5M1 13l4.5-4.5" stroke="#7a6c4e" stroke-width="1.6" fill="none" stroke-linecap="round"></path></svg></div>
+  </div>
+
+  <!-- DOSIER 05 · BCN APP -->
+  <div data-screen-label="Dosier 05" onPointerDown="{{ bcn.down }}" style="position:absolute;left:{{ bcn.x }}px;top:{{ bcn.y }}px;z-index:{{ bcn.z }};width:300px;height:390px;transform:rotate({{ bcn.r }}deg) scale({{ bcn.s }});cursor:{{ bcn.cursor }};transition:{{ bcn.move }};">
+    <div style="position:absolute;top:-15px;left:16px;width:128px;height:16px;background:#8fa08a;border-radius:5px 5px 0 0;display:flex;align-items:center;padding:0 10px;"><span style="font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:#4c5c48;font-weight:700;">05 · Producto</span></div>
+    <div style="position:absolute;inset:0;background:#8fa08a;border-radius:5px;box-shadow:0 3px 8px rgba(0,0,0,0.28), 0 22px 48px rgba(0,0,0,0.42);"></div>
+    <div style="position:absolute;left:-300px;top:0;width:300px;height:390px;background:#82947d;border-radius:5px 0 0 5px;box-shadow:-4px 6px 12px rgba(0,0,0,0.2), -18px 24px 48px rgba(0,0,0,0.38);opacity:{{ bcn.openOp }};transition:opacity 0.3s;pointer-events:none;"></div>
+    <div style="position:absolute;left:-300px;top:0;width:600px;height:390px;pointer-events:none;">
+      <div ref="{{ bcn.book }}" class="pf-book" style="position:relative;width:600px;height:390px;">
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#8fa08a;border-radius:5px;"></div>
+          <div style="position:absolute;inset:10px;background:#f7f3e8;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">DOSIER 05 — PRODUCTO DIGITAL</div>
+            <div style="font-weight:800;font-size:34px;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:14px;">BCN App</div>
+            <div style="font-size:13px;color:#5c6572;margin-top:10px;">Gastronomía mediterránea · iOS Liquid Glass</div>
+            <div style="position:absolute;bottom:22px;left:22px;right:22px;border-top:1px solid #ddd3ba;padding-top:12px;display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:11px;color:#8a7c5e;">Diseño de producto · UI / prototipo</div>
+              <div style="font-size:11px;color:#8a7c5e;">Figma</div>
+            </div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#82947d;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">EL PROBLEMA</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0 0 16px;">El delivery generalista trata Barcelona como un mercado más de su red global: oferta homogénea, algoritmo genérico y fatiga de decisión.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">LA PROPUESTA</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">Una curaduría editorial de cocina mediterránea organizada por barrios: menos opciones, mejor elegidas, contadas como lo haría una guía local — no un marketplace.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#8fa08a;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:22px;box-sizing:border-box;">
+              <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;margin-bottom:16px;">SISTEMA DE COLOR</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <div style="display:flex;flex-direction:column;gap:5px;align-items:center;"><div style="width:40px;height:40px;border-radius:8px;background:#031D44;"></div><div style="font-size:9.5px;color:#8a7c5e;">Prussian</div></div>
+                <div style="display:flex;flex-direction:column;gap:5px;align-items:center;"><div style="width:40px;height:40px;border-radius:8px;background:#04395E;"></div><div style="font-size:9.5px;color:#8a7c5e;">Deep Space</div></div>
+                <div style="display:flex;flex-direction:column;gap:5px;align-items:center;"><div style="width:40px;height:40px;border-radius:8px;background:#70A288;"></div><div style="font-size:9.5px;color:#8a7c5e;">Muted Teal</div></div>
+                <div style="display:flex;flex-direction:column;gap:5px;align-items:center;"><div style="width:40px;height:40px;border-radius:8px;background:#DAB785;"></div><div style="font-size:9.5px;color:#8a7c5e;">Tan</div></div>
+                <div style="display:flex;flex-direction:column;gap:5px;align-items:center;"><div style="width:40px;height:40px;border-radius:8px;background:#D80032;"></div><div style="font-size:9.5px;color:#8a7c5e;">Crimson</div></div>
+              </div>
+              <div style="font-family:'Caveat',cursive;font-size:18px;color:#31435c;margin-top:18px;">5 pantallas: Inicio · Explorar · Social · Guardados · Perfil</div>
+              <div style="font-family:'Caveat',cursive;font-size:18px;color:#8a7c5e;margin-top:8px;">pasa la página: el prototipo funciona de verdad →</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">05 · 1/2</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#82947d;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">EL LENGUAJE</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0 0 16px;">Liquid Glass de iOS: superficies translúcidas con blur, bordes finos y una barra de navegación flotante que nunca tapa el contenido. La comida es la protagonista; la interfaz, el cristal del escaparate.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">CASO COMPLETO</div>
+            <a href="https://www.figma.com/proto/IiBG03naJpyxZ2R1qj6ERJ/BCN-APP?page-id=0%3A1&amp;node-id=34-7&amp;p=f&amp;viewport=468%2C-452%2C1.06&amp;t=yzuWJjnTCUjTLSjY-1&amp;scaling=scale-down&amp;content-scaling=fixed&amp;starting-point-node-id=34%3A7&amp;show-proto-sidebar=1" style="display:inline-block;font-size:12px;color:#31435c;" target="_blank" rel="noopener noreferrer">Ver el proyecto en el portfolio →</a>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#8fa08a;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:22px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+              <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;align-self:flex-start;">PRUÉBALA EN TU MÓVIL</div>
+              <img src="uploads/pasted-1784510440122-0.png" alt="QR del prototipo BCN App" style="width:190px;height:190px;object-fit:contain;background:#fff;border:1px solid #ddd3ba;border-radius:2px;padding:8px;box-sizing:border-box;box-shadow:0 2px 6px rgba(0,0,0,0.12);">
+              <div style="font-family:'Caveat',cursive;font-size:19px;color:#31435c;text-align:center;">escanea y abre el prototipo</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">05 · 2/2</div>
+          </div>
+        </div>
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#82947d;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'Caveat',cursive;font-size:20px;color:#8a7c5e;">— fin del dosier —</div></div>
+        </div>
+      </div>
+    </div>
+    <div onPointerDown="{{ bcn.prev }}" title="Página anterior" style="position:absolute;left:-290px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ bcn.prevOp }};pointer-events:{{ bcn.prevPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom left;"><div style="position:absolute;left:0;bottom:0;width:0;height:0;border-bottom:46px solid #e6dfc9;border-right:46px solid transparent;filter:drop-shadow(3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ bcn.next }}" title="Pasar página" style="position:absolute;right:10px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ bcn.nextOp }};pointer-events:{{ bcn.nextPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom right;"><div style="position:absolute;right:0;bottom:0;width:0;height:0;border-bottom:46px solid #eae3cf;border-left:46px solid transparent;filter:drop-shadow(-3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ bcn.max }}" title="Maximizar" style="position:absolute;right:16px;top:16px;width:32px;height:32px;cursor:pointer;z-index:12;display:flex;align-items:center;justify-content:center;" style-hover="transform:scale(1.15);"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M8 1h5v5M6 13H1V8M13 1 8.5 5.5M1 13l4.5-4.5" stroke="#7a6c4e" stroke-width="1.6" fill="none" stroke-linecap="round"></path></svg></div>
+  </div>
+
+  <!-- DOSIER 07 · SOLELL CAFÉ -->
+  <div data-screen-label="Dosier 07" onPointerDown="{{ cafe.down }}" style="position:absolute;left:{{ cafe.x }}px;top:{{ cafe.y }}px;z-index:{{ cafe.z }};width:356px;height:211px;transform:rotate({{ cafe.r }}deg) scale({{ cafe.s }});cursor:{{ cafe.cursor }};transition:{{ cafe.move }};">
+    <div style="position:absolute;top:-15px;left:16px;width:128px;height:16px;background:#7183b8;border-radius:5px 5px 0 0;display:flex;align-items:center;padding:0 10px;"><span style="font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:#3b4a75;font-weight:700;">07 · Branding</span></div>
+    <div style="position:absolute;inset:0;background:#7183b8;border-radius:5px;box-shadow:0 3px 8px rgba(0,0,0,0.28), 0 22px 48px rgba(0,0,0,0.42);"></div>
+    <div style="position:absolute;left:-356px;top:0;width:356px;height:211px;background:#65779f;border-radius:5px 0 0 5px;box-shadow:-4px 6px 12px rgba(0,0,0,0.2), -18px 24px 48px rgba(0,0,0,0.38);opacity:{{ cafe.openOp }};transition:opacity 0.3s;pointer-events:none;"></div>
+    <div style="position:absolute;left:-356px;top:0;width:712px;height:211px;pointer-events:none;">
+      <div ref="{{ cafe.book }}" class="pf-book pf-wide" style="position:relative;width:712px;height:211px;">
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:5px;"></div>
+          <div style="position:absolute;inset:8px;background:#f7f3e8;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">DOSIER 07 — BRANDING</div>
+            <div style="font-weight:800;font-size:26px;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:8px;">Solell Café</div>
+            <div style="font-size:11px;color:#5c6572;margin-top:6px;">Cafetería de barrio · Barcelona</div>
+            <div style="position:absolute;bottom:14px;left:18px;right:18px;border-top:1px solid #ddd3ba;padding-top:8px;display:flex;flex-direction:column;gap:2px;">
+              <div style="font-size:9.5px;color:#8a7c5e;">Identidad + packaging + uniforme</div>
+              <div style="font-size:9.5px;color:#8a7c5e;">Illustrator · Photoshop · Blender</div>
+            </div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:14px 16px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL ENCARGO</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0 0 9px;">Identidad para la cafetería hermana de Solell Jewelry: mismo espíritu mediterráneo, otro ritual. Tenía que sentirse artesanal y de barrio, pero aguantar al lado de las cadenas de especialidad.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">LA DECISIÓN</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0;">Barcelona ya tenía la textura: el trencadís. Azul cobalto sobre blanco roto, un monograma con carácter tipográfico propio, y dejar que el patrón haga el trabajo duro en cada superficie.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:14px 16px;box-sizing:border-box;display:flex;align-items:center;gap:14px;text-align:left;">
+              <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;position:absolute;left:16px;top:12px;">EL PORQUÉ</div>
+              <img src="uploads/Untitled-10 copia.svg" alt="Monograma Solell Café" draggable="{{ false }}" style="display:block;width:78px;height:110px;object-fit:contain;flex:none;">
+              <p style="font-size:9.5px;line-height:1.5;color:#3a4250;margin:0;">Dos gotas que se encuentran: la de café que cae y el sol que sale — <em>solell</em> significa «soleado» en catalán. El monograma condensa el ritual de cada mañana: algo oscuro, algo luminoso, y el instante en que se tocan.</p>
+              <div style="font-family:'Caveat',cursive;font-size:14px;color:#8a7c5e;position:absolute;right:14px;bottom:26px;">todo lo demás sale de aquí</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">07 · 1/3</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:14px 16px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL NOMBRE</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0 0 9px;">Solell comparte apellido con la joyería: la misma familia, dos rituales distintos. El nombre ya traía consigo el sol, el Mediterráneo y el barrio — solo había que servirlo en taza.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">LA VOZ</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0;">Cercana y en catalán primero. La marca no grita: saluda como se saluda al camarero que ya sabe qué vas a pedir.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:12px;box-sizing:border-box;display:flex;flex-direction:column;gap:6px;">
+              <img src="uploads/Coffee Cup 3-b11d7ff0.png" alt="Vasos Solell Café" draggable="{{ false }}" style="display:block;width:100%;flex:1;min-height:0;object-fit:cover;box-shadow:0 4px 14px rgba(0,0,0,0.15);">
+              <div style="font-family:'Caveat',cursive;font-size:14px;color:#31435c;text-align:center;">el trencadís envuelve el vaso</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">07 · 2/3</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:14px 16px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL SISTEMA</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0 0 9px;">Dos piezas lo hacen todo: el monograma S — dos gotas que se encuentran, tipografía serif afilada — y el patrón de trencadís azul, herencia directa del mosaico de Gaudí. Juntas visten vaso, bolsa, delantal y fachada sin repetirse nunca igual.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL DETALLE</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0;">Las bolsas hablan catalán — «feliços de fer el teu dia especial» — porque la marca es de barrio antes que de franquicia.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:12px;box-sizing:border-box;position:relative;">
+              <img src="uploads/18082025_coffee shop mockup 010.png" alt="Bolsa Solell Café" draggable="{{ false }}" style="display:block;width:120px;height:150px;object-fit:cover;box-shadow:0 6px 16px rgba(0,0,0,0.2);transform:rotate(-2deg);position:absolute;left:16px;top:14px;">
+              <img src="uploads/HOM-000-024-M-Freebie.png" alt="Delantal Solell Café" draggable="{{ false }}" style="display:block;width:100px;height:126px;object-fit:cover;box-shadow:0 6px 16px rgba(0,0,0,0.2);transform:rotate(3.5deg);position:absolute;right:14px;bottom:26px;">
+              <div style="font-family:'Caveat',cursive;font-size:13px;color:#31435c;position:absolute;left:16px;bottom:10px;">bolsa + delantal — la marca vestida</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">07 · 3/3</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:14px 16px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL MANUAL</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0 0 9px;">Todo el sistema está documentado en un manual de identidad de 18 páginas: esencia y tono, naming, justificación del símbolo, construcción, color, tipografía y aplicaciones. Versión 4.0 · uso interno.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:8px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 4px;">EL TAGLINE</div>
+            <p style="font-size:9.5px;line-height:1.45;color:#3a4250;margin:0 0 14px;">«On el cafè troba la llum.» Un lugar donde vive el sol.</p>
+            <a href="uploads/Untitled-be203567.pdf" target="_blank" style="display:inline-block;font-size:12px;">Abrir el manual en grande →</a>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp1 }}" onClick="{{ openC1 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 1 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp2 }}" onClick="{{ openC2 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 2 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp3 }}" onClick="{{ openC3 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 3 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp4 }}" onClick="{{ openC4 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 4 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp5 }}" onClick="{{ openC5 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 5 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp6 }}" onClick="{{ openC6 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 6 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp7 }}" onClick="{{ openC7 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 7 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp8 }}" onClick="{{ openC8 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 8 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp9 }}" onClick="{{ openC9 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 9 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp10 }}" onClick="{{ openC10 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 10 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp11 }}" onClick="{{ openC11 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 11 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp12 }}" onClick="{{ openC12 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 12 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp13 }}" onClick="{{ openC13 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 13 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp14 }}" onClick="{{ openC14 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 14 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp15 }}" onClick="{{ openC15 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 15 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp16 }}" onClick="{{ openC16 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 16 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#7183b8;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp17 }}" onClick="{{ openC17 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 17 / 18</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <canvas ref="{{ cfp18 }}" onClick="{{ openC18 }}" style="display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;"></canvas>
+            <div style="position:absolute;left:12px;bottom:10px;font-family:ui-monospace,'SF Mono',monospace;font-size:9px;color:#a89a78;">MANUAL 18 / 18</div>
+          </div>
+        </div>
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#65779f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'Caveat',cursive;font-size:17px;color:#8a7c5e;">— fin del dosier —</div></div>
+        </div>
+      </div>
+    </div>
+    <div onPointerDown="{{ cafe.prev }}" title="Página anterior" style="position:absolute;left:-346px;bottom:8px;width:36px;height:36px;cursor:pointer;z-index:12;opacity:{{ cafe.prevOp }};pointer-events:{{ cafe.prevPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom left;"><div style="position:absolute;left:0;bottom:0;width:0;height:0;border-bottom:34px solid #e6dfc9;border-right:34px solid transparent;filter:drop-shadow(3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ cafe.next }}" title="Pasar página" style="position:absolute;right:8px;bottom:8px;width:36px;height:36px;cursor:pointer;z-index:12;opacity:{{ cafe.nextOp }};pointer-events:{{ cafe.nextPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom right;"><div style="position:absolute;right:0;bottom:0;width:0;height:0;border-bottom:34px solid #eae3cf;border-left:34px solid transparent;filter:drop-shadow(-3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ cafe.max }}" title="Maximizar" style="position:absolute;right:12px;top:10px;width:26px;height:26px;cursor:pointer;z-index:12;display:flex;align-items:center;justify-content:center;" style-hover="transform:scale(1.15);"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M8 1h5v5M6 13H1V8M13 1 8.5 5.5M1 13l4.5-4.5" stroke="#7a6c4e" stroke-width="1.6" fill="none" stroke-linecap="round"></path></svg></div>
+  </div>
+
+  <!-- DOSIER 06 · FICHA PERSONAL -->
+  <div data-screen-label="Dosier 06" onPointerDown="{{ yo.down }}" style="position:absolute;left:{{ yo.x }}px;top:{{ yo.y }}px;z-index:{{ yo.z }};width:300px;height:390px;transform:rotate({{ yo.r }}deg) scale({{ yo.s }});cursor:{{ yo.cursor }};transition:{{ yo.move }};">
+    <div style="position:absolute;top:-15px;left:16px;width:128px;height:16px;background:#a3777d;border-radius:5px 5px 0 0;display:flex;align-items:center;padding:0 10px;"><span style="font-size:8.5px;letter-spacing:0.14em;text-transform:uppercase;color:#5e3d42;font-weight:700;">06 · Ficha</span></div>
+    <div style="position:absolute;inset:0;background:#a3777d;border-radius:5px;box-shadow:0 3px 8px rgba(0,0,0,0.28), 0 22px 48px rgba(0,0,0,0.42);"></div>
+    <div style="position:absolute;left:-300px;top:0;width:300px;height:390px;background:#95696f;border-radius:5px 0 0 5px;box-shadow:-4px 6px 12px rgba(0,0,0,0.2), -18px 24px 48px rgba(0,0,0,0.38);opacity:{{ yo.openOp }};transition:opacity 0.3s;pointer-events:none;"></div>
+    <div style="position:absolute;left:-300px;top:0;width:600px;height:390px;pointer-events:none;">
+      <div ref="{{ yo.book }}" class="pf-book" style="position:relative;width:600px;height:390px;">
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#a3777d;border-radius:5px;"></div>
+          <div style="position:absolute;inset:10px;background:#f7f3e8;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">DOSIER 06 — FICHA PERSONAL</div>
+            <div style="position:relative;width:116px;height:140px;margin:18px 0 0;">
+              <img src="uploads/84EB414C-FB3B-494C-9DCA-7A539F96EABC_1_105_c.jpeg" alt="Adrià Carretero" draggable="{{ false }}" style="display:block;width:110px;height:132px;object-fit:cover;background:#fff;padding:4px 4px 14px;box-shadow:0 5px 14px rgba(0,0,0,0.25);transform:rotate(-2.5deg);">
+              <svg width="26" height="52" viewBox="0 0 26 52" style="position:absolute;right:-6px;top:-16px;transform:rotate(14deg);filter:drop-shadow(1px 2px 2px rgba(0,0,0,0.25));"><path d="M8 14v26a5 5 0 0 0 10 0V12a8 8 0 0 0-16 0v30" fill="none" stroke="#9aa3ad" stroke-width="2.6" stroke-linecap="round"></path></svg>
+            </div>
+            <div style="font-weight:800;font-size:30px;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:16px;">Adrià Carretero</div>
+            <div style="font-size:13px;color:#5c6572;margin-top:8px;">Creador &amp; artista visual · Barcelona</div>
+            <div style="position:absolute;bottom:22px;left:22px;right:22px;border-top:1px solid #ddd3ba;padding-top:12px;display:flex;flex-direction:column;gap:4px;">
+              <div style="font-size:11px;color:#8a7c5e;">Branding · editorial · motion · producto</div>
+            </div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#95696f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">QUIÉN SOY</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0 0 16px;">Diseñador gráfico de Sabadell, Barcelona. Lo que más me gusta: imágenes corporativas, pósters, mezclar escenas 3D con 2D, motion graphics, webs y UI. Vengo del dibujo y eso se nota — pienso primero en papel. En septiembre empiezo el Grau en Arts i Disseny en la Massana.</p>
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 6px;">CÓMO TRABAJO</div>
+            <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">Rápido en explorar, lento en decidir: muchas versiones baratas antes de comprometerme con una. Cada proyecto de esta mesa tiene su porqué en las páginas interiores.</p>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#a3777d;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:22px;box-sizing:border-box;">
+              <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 14px;">HABILIDADES</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;color:#1e2733;">Identidad &amp; branding</span></div><div style="height:5px;background:#e6dcc3;border-radius:3px;"><div style="width:88%;height:100%;background:#a3777d;border-radius:3px;"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;color:#1e2733;">Cartel &amp; editorial</span></div><div style="height:5px;background:#e6dcc3;border-radius:3px;"><div style="width:82%;height:100%;background:#a3777d;border-radius:3px;"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;color:#1e2733;">Motion graphics</span></div><div style="height:5px;background:#e6dcc3;border-radius:3px;"><div style="width:70%;height:100%;background:#a3777d;border-radius:3px;"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;color:#1e2733;">Webs &amp; UI</span></div><div style="height:5px;background:#e6dcc3;border-radius:3px;"><div style="width:74%;height:100%;background:#a3777d;border-radius:3px;"></div></div></div>
+                <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="font-weight:600;color:#1e2733;">3D + 2D combinados</span></div><div style="height:5px;background:#e6dcc3;border-radius:3px;"><div style="width:64%;height:100%;background:#a3777d;border-radius:3px;"></div></div></div>
+              </div>
+              <div style="font-family:'Caveat',cursive;font-size:17px;color:#8a7c5e;margin-top:16px;">las barras son honestas, lo prometo</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">06 · 1/3</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#95696f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 12px;">FORMACIÓN</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="font-weight:600;color:#1e2733;">Grau en Arts i Disseny</span><span style="color:#8a7c5e;font-size:10.5px;">sep 2026</span></div><div style="font-size:11px;color:#3a4250;margin-top:2px;">Escola Massana (UAB) · admitido</div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="font-weight:600;color:#1e2733;">Ed. Superior en Diseño Gráfico</span></div><div style="font-size:11px;color:#3a4250;margin-top:2px;">35mm Escuela de Diseño · Sabadell</div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="font-weight:600;color:#1e2733;">Bachillerato de Artes</span></div><div style="font-size:11px;color:#3a4250;margin-top:2px;">INS Ferran Casablancas</div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="font-weight:600;color:#1e2733;">Técnicas de café y barismo</span></div><div style="font-size:11px;color:#3a4250;margin-top:2px;">Autoformación · V60, prensa francesa</div></div>
+            </div>
+            <div style="font-family:'Caveat',cursive;font-size:17px;color:#31435c;margin-top:14px;">Massana empieza en septiembre ✳</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#a3777d;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:22px;box-sizing:border-box;">
+              <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 12px;">HERRAMIENTAS</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">Photoshop</span>
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">Illustrator</span>
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">After Effects</span>
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">InDesign</span>
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">Figma</span>
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">Blender</span>
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">Procreate</span>
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">Office 365</span>
+                <span style="font-size:11px;padding:4px 10px;border:1px solid #cbbf9e;border-radius:20px;color:#3a4250;">IA generativa</span>
+              </div>
+              <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:18px 0 8px;">IDIOMAS</div>
+              <div style="display:flex;flex-direction:column;gap:5px;font-size:12px;color:#3a4250;">
+                <div style="display:flex;justify-content:space-between;"><span>Catalán</span><span style="color:#8a7c5e;">C2 · nativo</span></div>
+                <div style="display:flex;justify-content:space-between;"><span>Castellano</span><span style="color:#8a7c5e;">nativo</span></div>
+                <div style="display:flex;justify-content:space-between;"><span>Inglés</span><span style="color:#8a7c5e;">B2</span></div>
+              </div>
+              <div style="font-family:'Caveat',cursive;font-size:17px;color:#8a7c5e;margin-top:14px;">el inglés está en ello, como el V60</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">06 · 2/3</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#95696f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:22px;box-sizing:border-box;">
+            <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin:0 0 12px;">TRAYECTORIA</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="font-weight:600;color:#1e2733;">Atención al cliente · retail</span><span style="color:#8a7c5e;font-size:10.5px;">2025 – hoy</span></div><div style="font-size:11px;line-height:1.5;color:#3a4250;margin-top:2px;">DRIM, Verdecora, Bon Àrea — trato directo con cliente, ritmo alto, trabajo en equipo por turnos.</div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;"><span style="font-weight:600;color:#1e2733;">Diseño freelance</span><span style="color:#8a7c5e;font-size:10.5px;">en curso</span></div><div style="font-size:11px;line-height:1.5;color:#3a4250;margin-top:2px;">Los seis dosieres de esta mesa: branding, cartel, contenido, editorial e interfaz.</div></div>
+            </div>
+            <div style="font-family:'Caveat',cursive;font-size:17px;color:#31435c;margin-top:16px;">años de mostrador: sé escuchar a un cliente</div>
+          </div>
+        </div>
+        <div class="page" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#a3777d;border-radius:0 5px 5px 0;"></div>
+          <div style="position:absolute;inset:10px 10px 10px 6px;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);overflow:hidden;">
+            <div style="height:100%;padding:22px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">DISPONIBILIDAD</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:9px;height:9px;border-radius:50%;background:#5d9e6d;flex:none;"></div>
+                <div style="font-size:13px;font-weight:600;color:#1e2733;">Disponible para encargos</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:11.5px;border-top:1px solid #ddd3ba;padding-top:10px;"><span style="color:#8a7c5e;">Modalidad</span><span style="color:#1e2733;font-weight:600;">Presencial BCN · remoto&nbsp;</span></div>
+              <div onPointerDown="{{ formStop }}" style="border-top:1px solid #ddd3ba;padding-top:12px;display:flex;flex-direction:column;gap:8px;">
+                <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">CUÉNTAME TU PROYECTO</div>
+                <p style="font-size:11.5px;line-height:1.6;color:#3a4250;margin:0;">Branding, editorial, motion o producto digital — escríbeme y te respondo en menos de 24 h.</p>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <a href="Formulario Encargo.dc.html" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:8px 18px;background:#1e2733;color:#f7f3e8;border-radius:3px;cursor:pointer;text-decoration:none;" style-hover="background:#31435c;">Abrir formulario →</a>
+                  <a onClick="{{ downloadCv }}" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:8px 18px;border:1.5px solid #1e2733;color:#1e2733;border-radius:3px;cursor:pointer;text-decoration:none;" style-hover="background:#1e2733;color:#f7f3e8;">CV ↓</a>
+                </div>
+              </div>
+              <div style="font-family:'Caveat',cursive;font-size:18px;color:#31435c;margin-top:auto;">¿hacemos algo juntos?</div>
+            </div>
+            <div style="position:absolute;right:12px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">06 · 3/3</div>
+          </div>
+        </div>
+        <div class="page" data-density="hard" style="position:relative;">
+          <div style="position:absolute;inset:0;background:#95696f;border-radius:5px 0 0 5px;"></div>
+          <div style="position:absolute;inset:10px 6px 10px 10px;background:#f3eedf;border-radius:2px;display:flex;align-items:center;justify-content:center;"><div style="font-family:'Caveat',cursive;font-size:20px;color:#8a7c5e;">— fin del dosier —</div></div>
+        </div>
+      </div>
+    </div>
+    <div onPointerDown="{{ yo.prev }}" title="Página anterior" style="position:absolute;left:-290px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ yo.prevOp }};pointer-events:{{ yo.prevPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom left;"><div style="position:absolute;left:0;bottom:0;width:0;height:0;border-bottom:46px solid #e6dfc9;border-right:46px solid transparent;filter:drop-shadow(3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ yo.next }}" title="Pasar página" style="position:absolute;right:10px;bottom:10px;width:48px;height:48px;cursor:pointer;z-index:12;opacity:{{ yo.nextOp }};pointer-events:{{ yo.nextPtr }};transition:opacity 0.3s;" style-hover="transform:scale(1.1);transform-origin:bottom right;"><div style="position:absolute;right:0;bottom:0;width:0;height:0;border-bottom:46px solid #eae3cf;border-left:46px solid transparent;filter:drop-shadow(-3px -3px 4px rgba(0,0,0,0.22));"></div></div>
+    <div onPointerDown="{{ yo.max }}" title="Maximizar" style="position:absolute;right:16px;top:16px;width:32px;height:32px;cursor:pointer;z-index:12;display:flex;align-items:center;justify-content:center;" style-hover="transform:scale(1.15);"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M8 1h5v5M6 13H1V8M13 1 8.5 5.5M1 13l4.5-4.5" stroke="#7a6c4e" stroke-width="1.6" fill="none" stroke-linecap="round"></path></svg></div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;messiness&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1.2,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Mesa&quot;},&quot;showHelp&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Mesa&quot;},&quot;startTidy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Mesa&quot;}}">
+class Component extends DCLogic {
+  videoRef = React.createRef();
+  pdfCanvasRef = React.createRef();
+  formNameRef = React.createRef();
+  formTypeRef = React.createRef();
+  formMsgRef = React.createRef();
+  pcPdfRefs = Array.from({ length: 29 }, () => React.createRef());
+  cfPdfRefs = Array.from({ length: 18 }, () => React.createRef());
+  cfManualDone = false;
+  lbCanvasRef = React.createRef();
+  lbPage = 0;
+  lbZoom = 1;
+  lbSrc = 'pc';
+  lbImg = '';
+  pcDoc = null;
+  async renderCafeManual() {
+    if (this.cfManualDone) return;
+    this.cfManualDone = true;
+    try {
+      const doc = await this.ensurePdf();
+      for (let i = 1; i <= Math.min(18, doc.numPages); i++) {
+        const canvas = this.cfPdfRefs[i - 1].current;
+        if (!canvas) continue;
+        const page = await doc.getPage(i);
+        const base = page.getViewport({ scale: 1 });
+        const viewport = page.getViewport({ scale: 900 / base.width });
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      }
+    } catch (e) { console.warn('cafe manual render', e); this.cfManualDone = false; }
+  }
+  lbTotal() { return this.lbSrc === 'cafe' ? 18 : 29; }
+  lbDoc() { return this.lbSrc === 'cafe' ? this.pdfDoc : this.pcDoc; }
+  openLightbox(n, src) {
+    this.lbSrc = src || 'pc';
+    this.lbPage = n;
+    this.lbZoom = 1;
+    this.forceUpdate();
+    setTimeout(() => this.drawLightbox(), 30);
+  }
+  stepLightbox(d) {
+    if (this.lbSrc === 'img') return;
+    const n = Math.max(1, Math.min(this.lbTotal(), this.lbPage + d));
+    if (n === this.lbPage) return;
+    this.lbPage = n;
+    this.forceUpdate();
+    this.drawLightbox();
+  }
+  async drawLightbox() {
+    try {
+      const canvas = this.lbCanvasRef.current;
+      if (canvas && (this.lbSrc === 'img' || (this.lbSrc === 'pc' && this.lbPage === 21))) {
+        const img = new Image();
+        img.src = this.lbSrc === 'img' ? this.lbImg : 'uploads/Captura de pantalla 2026-08-29 a las 20.15.30.png';
+        await img.decode();
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        canvas.getContext('2d').drawImage(img, 0, 0);
+        return;
+      }
+      const doc = this.lbDoc();
+      if (!canvas || !doc || !this.lbPage) return;
+      const page = await doc.getPage(this.lbPage);
+      const base = page.getViewport({ scale: 1 });
+      const viewport = page.getViewport({ scale: 2200 / base.width });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    } catch (e) { console.warn('lightbox render', e); }
+  }
+  pcManualDone = false;
+  async renderManual() {
+    if (this.pcManualDone) return;
+    this.pcManualDone = true;
+    try {
+      const pdfjs = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs');
+      pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs';
+      const doc = await pdfjs.getDocument('publica/pclub-manual.pdf').promise;
+      this.pcDoc = doc;
+      for (let i = 1; i <= Math.min(29, doc.numPages); i++) {
+        const canvas = this.pcPdfRefs[i - 1].current;
+        if (!canvas) continue;
+        const page = await doc.getPage(i);
+        const base = page.getViewport({ scale: 1 });
+        const viewport = page.getViewport({ scale: 900 / base.width });
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      }
+    } catch (e) { console.warn('manual render', e); this.pcManualDone = false; }
+  }
+  pdfDoc = null;
+  pdfPage = 1;
+  pdfTotal = 18;
+  books = {};
+  maxTurn = { pc: 18, sev: 2, rrss: 2, mag: 2, bcn: 2, cafe: 13, yo: 3 };
+  async ensurePdf() {
+    if (this.pdfDoc) return this.pdfDoc;
+    const pdfjs = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs');
+    pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs';
+    this.pdfDoc = await pdfjs.getDocument('uploads/Untitled-be203567.pdf').promise;
+    this.pdfTotal = this.pdfDoc.numPages;
+    this.forceUpdate();
+    return this.pdfDoc;
+  }
+  async drawPdf() {
+    try {
+      const doc = await this.ensurePdf();
+      const canvas = this.pdfCanvasRef.current;
+      if (!canvas) return;
+      const page = await doc.getPage(this.pdfPage);
+      const viewport = page.getViewport({ scale: 1100 / page.getViewport({ scale: 1 }).width });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    } catch (e) { console.warn('pdf render', e); }
+  }
+  stepPdf(d) {
+    this.pdfPage = Math.max(1, Math.min(this.pdfTotal, this.pdfPage + d));
+    this.forceUpdate();
+    this.drawPdf();
+  }
+  ids = ['pc', 'sev', 'rrss', 'mag', 'bcn', 'cafe', 'yo'];
+  scatter = {
+    pc:   { x: 60,  y: 110, r: -7 },
+    sev:  { x: 330, y: 260, r: 4.5 },
+    rrss: { x: 950, y: 90, r: -3 },
+    mag:  { x: 150, y: 470, r: 6 },
+    bcn:  { x: 1150, y: 380, r: -5 },
+    cafe: { x: 680, y: 70, r: 2 },
+    yo:   { x: 0, y: 0, r: -2 },
+    card: { x: 880, y: 640, r: 8 },
+  };
+  tidyPos = {
+    pc:   { x: 80,  y: 130, r: 0 },
+    sev:  { x: 420, y: 130, r: 0 },
+    rrss: { x: 760, y: 130, r: 0 },
+    mag:  { x: 80,  y: 570, r: 0 },
+    bcn:  { x: 420, y: 570, r: 0 },
+    cafe: { x: 1100, y: 130, r: 0 },
+    yo:   { x: 760, y: 570, r: 0 },
+    card: { x: 1100, y: 590, r: 0 },
+  };
+  constructor(props) {
+    super(props);
+    this.mobile = window.innerWidth < 760;
+    this.bookRefs = {};
+    this.ids.forEach((id) => { this.bookRefs[id] = React.createRef(); });
+    if (this.mobile) {
+      const cx = Math.max(8, (window.innerWidth - 300) / 2);
+      let y = 100;
+      this.ids.forEach((id, i) => {
+        const pos = { x: cx, y, r: i % 2 ? 1.5 : -1.5 };
+        this.scatter[id] = pos;
+        this.tidyPos[id] = { ...pos, r: 0 };
+        y += (id === 'card' ? 88 : this.dim(id).h) + 48;
+      });
+      this.deskH = y + 20;
+    } else {
+      this.scatter.yo = { x: (window.innerWidth - 300) / 2, y: Math.max(40, (window.innerHeight - 390) / 2), r: -2 };
+    }
+    const items = {};
+    this.ids.forEach((id, i) => { items[id] = { ...this.scatter[id], z: id === 'yo' ? this.ids.length + 1 : i + 1, turned: 0 }; });
+    this.state = { items, topZ: this.ids.length, tidy: false, dragging: null, maximized: null };
+    this.drag = null;
+  }
+  initBooks = () => {
+    if (!(window.St && window.St.PageFlip)) { this.bookTimer = setTimeout(this.initBooks, 120); return; }
+    this.ids.forEach((id) => {
+      const el = this.bookRefs[id] && this.bookRefs[id].current;
+      if (!el || this.books[id]) return;
+      try {
+        const pf = new window.St.PageFlip(el, {
+          width: this.dim(id).w, height: this.dim(id).h, size: 'fixed',
+          showCover: true, usePortrait: false,
+          flippingTime: 700, maxShadowOpacity: 0.45,
+          useMouseEvents: false, mobileScrollSupport: false,
+          autoSize: false, showPageCorners: false, drawShadow: true,
+        });
+        pf.loadFromHTML(el.querySelectorAll('.page'));
+        this.books[id] = pf;
+        const turned = (this.state.items[id] || {}).turned || 0;
+        if (turned > 0) pf.turnToPage(Math.min(turned * 2, pf.getPageCount() - 1));
+      } catch (e) { console.warn('pageflip init', id, e); }
+    });
+  };
+  componentDidMount() {
+    this.renderManual();
+    this.renderCafeManual();
+    if (this.props.startTidy && !this.state.tidy && !this.mobile) this.toggleTidy();
+    this.setState((s) => {
+      const items = { ...s.items };
+      this.ids.forEach((id, i) => { if (!items[id]) items[id] = { ...this.scatter[id], z: i + 1, turned: 0 }; });
+      return { items };
+    });
+    window.addEventListener('pointermove', this.onMove);
+    window.addEventListener('pointerup', this.onUp);
+    window.addEventListener('keydown', this.onKey);
+    const v = this.videoRef.current;
+    if (v) { v.muted = true; v.play().catch(() => {}); }
+    this.drawPdf();
+    this.initBooks();
+  }
+  componentWillUnmount() {
+    clearTimeout(this.bookTimer);
+    Object.values(this.books).forEach((pf) => { try { pf.destroy(); } catch (e) {} });
+    this.books = {};
+    window.removeEventListener('pointermove', this.onMove);
+    window.removeEventListener('pointerup', this.onUp);
+    window.removeEventListener('keydown', this.onKey);
+  }
+  onKey = (e) => {
+    if (this.lbPage) {
+      if (e.key === 'Escape') { this.lbPage = 0; this.forceUpdate(); return; }
+      if (e.key === 'ArrowRight') { this.stepLightbox(1); return; }
+      if (e.key === 'ArrowLeft') { this.stepLightbox(-1); return; }
+      return;
+    }
+    if (e.key === 'Escape') this.closeMax();
+  };
+  fill(items) {
+    const out = { ...items };
+    this.ids.forEach((id, i) => {
+      const base = { ...this.scatter[id], z: i + 1, turned: 0 };
+      out[id] = out[id] ? { ...base, ...out[id] } : base;
+    });
+    return out;
+  }
+  dim(id) { return (id === 'pc' || id === 'cafe') ? { w: 356, h: 211 } : { w: 300, h: 390 }; }
+  rect(items, id) {
+    const it = items[id];
+    if (id === 'card') return { x: it.x, y: it.y, w: 210, h: 88 };
+    const d = this.dim(id);
+    const open = it.turned > 0;
+    return { x: open ? it.x - d.w : it.x, y: it.y, w: open ? d.w * 2 : d.w, h: d.h };
+  }
+  shoveOthers(items, id) {
+    const W = window.innerWidth, H = window.innerHeight, M = 16;
+    const a = this.rect(items, id);
+    const out = { ...items };
+    const hit = (p, q) => Math.min(p.x + p.w, q.x + q.w) - Math.max(p.x, q.x) > 0 && Math.min(p.y + p.h, q.y + q.h) - Math.max(p.y, q.y) > 0;
+    const placedRects = [a];
+    const overlaps = (r) => placedRects.some((p) => hit(p, r));
+    this.ids.forEach((oid) => {
+      if (oid === id || oid === this.state.maximized) return;
+      const b = this.rect(out, oid);
+      const ox = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+      const oy = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+      if (ox <= 0 || oy <= 0) return;
+      const it = { ...out[oid] };
+      const bcx = b.x + b.w / 2, acx = a.x + a.w / 2;
+      const bcy = b.y + b.h / 2, acy = a.y + a.h / 2;
+      const dOid = this.dim(oid);
+      const openOid = b.w === dOid.w * 2;
+      const clampX = (nx) => Math.max(8 + (openOid ? dOid.w : 0), Math.min(nx, W - (openOid ? dOid.w : b.w) - 8));
+      const clampY = (ny) => Math.max(8, Math.min(ny, H - b.h - 8));
+      const cands = [];
+      const dirX = bcx >= acx ? 1 : -1, dirY = bcy >= acy ? 1 : -1;
+      const candX = (d) => ({ x: d > 0 ? a.x + a.w + M : a.x - b.w - M, y: b.y });
+      const candY = (d) => ({ x: b.x, y: d > 0 ? a.y + a.h + M : a.y - b.h - M });
+      if (ox < oy) cands.push(candX(dirX), candX(-dirX), candY(dirY), candY(-dirY));
+      else cands.push(candY(dirY), candY(-dirY), candX(dirX), candX(-dirX));
+      let placed = false;
+      for (const c of cands) {
+        const nx = clampX(c.x), ny = clampY(c.y);
+        const r = { x: nx, y: ny, w: b.w, h: b.h };
+        if (!overlaps(r)) {
+          it.x = nx + (openOid ? dOid.w : 0);
+          it.y = ny;
+          placedRects.push(r);
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) { it.z = Math.min(it.z, out[id].z - 1); placedRects.push(b); }
+      out[oid] = it;
+    });
+    const maxZ = Math.max(...this.ids.filter((i) => i !== id).map((i) => out[i].z));
+    if (out[id].z <= maxZ) out[id] = { ...out[id], z: maxZ + 1 };
+    return out;
+  }
+  makeDown = (id) => (e) => {
+    if (this.mobile) return;
+    if (this.state.maximized === id) return;
+    const filled = this.fill(this.state.items);
+    const it = filled[id];
+    this.drag = { id, dx: e.clientX - it.x, dy: e.clientY - it.y };
+    const a = this.rect(filled, id);
+    const covered = this.ids.some((oid) => {
+      if (oid === id) return false;
+      const o = filled[oid];
+      if (o.z <= it.z) return false;
+      const b = this.rect(filled, oid);
+      return Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x) > 0 && Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y) > 0;
+    });
+    this.setState((s) => {
+      const items = this.fill(s.items);
+      if (covered) return { dragging: id, items: this.shoveOthers(items, id) };
+      const maxZ = Math.max(...this.ids.map((i) => items[i].z));
+      return { dragging: id, items: { ...items, [id]: { ...items[id], z: maxZ + 1 } } };
+    });
+  };
+  onMove = (e) => {
+    if (!this.drag) return;
+    const { id, dx, dy } = this.drag;
+    this.setState((s) => { const items = this.fill(s.items); return { items: { ...items, [id]: { ...items[id], x: e.clientX - dx, y: e.clientY - dy } } }; });
+  };
+  onUp = () => {
+    this.drag = null;
+    if (this.state.dragging) this.setState({ dragging: null });
+  };
+  makeTurn = (id, dir) => (e) => {
+    e.stopPropagation();
+    const cur = this.fill(this.state.items)[id].turned;
+    const turned = Math.max(0, Math.min(this.maxTurn[id], cur + dir));
+    if (turned === cur) return;
+    const pf = this.books[id];
+    if (pf) { if (dir > 0) pf.flipNext('bottom'); else pf.flipPrev('bottom'); }
+    this.setState((s) => {
+      const filled = this.fill(s.items);
+      const it = filled[id];
+      if (this.mobile) return { items: { ...filled, [id]: { ...it, turned } } };
+      let x = it.x;
+      if (turned > 0 && s.maximized !== id) x = Math.max(x, 315);
+      const items = { ...filled, [id]: { ...it, turned, x } };
+      return { items: this.shoveOthers(items, id) };
+    });
+  };
+  makeMax = (id) => (e) => {
+    e.stopPropagation();
+    this.setState((s) => ({ maximized: s.maximized === id ? null : id }));
+  };
+  closeMax = () => { if (this.state.maximized) this.setState({ maximized: null }); };
+  toggleTidy = () => {
+    this.setState((s) => {
+      const tidy = !s.tidy;
+      const src = tidy ? this.tidyPos : this.scatter;
+      const filled = this.fill(s.items);
+      const items = {};
+      this.ids.forEach((id) => { items[id] = { ...filled[id], ...src[id], turned: 0 }; });
+      return { tidy, items };
+    });
+    this.ids.forEach((id) => { const pf = this.books[id]; if (pf) { try { pf.turnToPage(0); } catch (e) {} } });
+  };
+  renderVals() {
+    const out = {
+      videoRef: this.videoRef,
+      ...Object.fromEntries(this.pcPdfRefs.map((r, i) => ['pcp' + (i + 1), r])),
+      ...Object.fromEntries(this.pcPdfRefs.map((r, i) => ['openM' + (i + 1), (e) => { e.stopPropagation(); this.openLightbox(i + 1, 'pc'); }])),
+      ...Object.fromEntries(this.cfPdfRefs.map((r, i) => ['cfp' + (i + 1), r])),
+      ...Object.fromEntries(this.cfPdfRefs.map((r, i) => ['openC' + (i + 1), (e) => { e.stopPropagation(); this.openLightbox(i + 1, 'cafe'); }])),
+      lbCanvasRef: this.lbCanvasRef,
+      lbDisplay: this.lbPage ? 'block' : 'none',
+      openImgNew: (e) => { e.stopPropagation(); this.lbImg = 'uploads/Captura de pantalla 2026-08-29 a las 21.03.00.png'; this.openLightbox(1, 'img'); },
+      lbTitle: this.lbSrc === 'cafe' ? 'SOLELL CAFÉ · MANUAL DE IDENTIDAD' : 'P.CLUB ✶ MANUAL DE MARCA',
+      lbLabel: this.lbSrc === 'img' ? 'variants de logo' : (this.lbPage || 1) + ' / ' + this.lbTotal(),
+      lbWidth: Math.round(this.lbZoom * 100) + '%',
+      lbZoomLabel: Math.round(this.lbZoom * 100) + '%',
+      lbClose: (e) => { e.stopPropagation(); this.lbPage = 0; this.forceUpdate(); },
+      lbPrev: (e) => { e.stopPropagation(); this.stepLightbox(-1); },
+      lbNext: (e) => { e.stopPropagation(); this.stepLightbox(1); },
+      lbZoomIn: (e) => { e.stopPropagation(); this.lbZoom = Math.min(4, this.lbZoom + 0.25); this.forceUpdate(); },
+      lbZoomOut: (e) => { e.stopPropagation(); this.lbZoom = Math.max(0.5, this.lbZoom - 0.25); this.forceUpdate(); },
+      pdfCanvasRef: this.pdfCanvasRef,
+      pdfPageLabel: this.pdfPage + ' / ' + this.pdfTotal,
+      pdfStop: (e) => e.stopPropagation(),
+      formStop: (e) => e.stopPropagation(),
+      pdfPrev: (e) => { e.stopPropagation(); this.stepPdf(-1); },
+      pdfNext: (e) => { e.stopPropagation(); this.stepPdf(1); },
+      downloadCv: async (e) => {
+        e.stopPropagation();
+        try {
+          const res = await fetch('uploads/CV Adria Carretero Hospitality.pdf');
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'CV Adria Carretero.pdf';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 4000);
+        } catch (err) { window.open('uploads/CV Adria Carretero Hospitality.pdf', '_blank'); }
+      },
+      toggleTidy: this.toggleTidy,
+      tidyLabel: this.state.tidy ? 'Esparcir' : 'Ordenar',
+      closeMax: this.closeMax,
+      scrimOpacity: this.state.maximized ? 1 : 0,
+      scrimPointer: this.state.maximized ? 'auto' : 'none',
+    };
+    const W = window.innerWidth, H = window.innerHeight;
+    out.deskH = this.mobile ? this.deskH + 'px' : '100vh';
+    out.deskOverflow = this.mobile ? 'visible' : 'hidden';
+    out.deskTouch = this.mobile ? 'pan-y' : 'none';
+    out.helpDisplay = (this.mobile || this.props.showHelp === false) ? 'none' : 'block';
+    out.tidyDisplay = this.mobile ? 'none' : 'block';
+    const filledItems = this.fill(this.state.items);
+    this.ids.forEach((id) => {
+      const it = filledItems[id];
+      const isMax = this.state.maximized === id;
+      const open = it.turned > 0;
+      const dragging = this.state.dragging === id;
+      const dm = this.dim(id);
+      let sc = isMax ? Math.min((W * 0.92) / (open ? dm.w * 2 : dm.w), (H * 0.92) / dm.h) : 1;
+      let x = isMax ? W / 2 - dm.w / 2 + (open ? (dm.w / 2) * sc : 0) : it.x;
+      let y = isMax ? (H - dm.h) / 2 + (this.mobile ? window.scrollY : 0) : it.y;
+      if (!isMax && this.mobile && open && id !== 'card') { sc = Math.min(1, (W - 24) / (dm.w * 2 + 20)); x = W / 2 - dm.w / 2 + (dm.w / 2) * sc; }
+      if (!isMax && dragging) sc = 1.03;
+      out[id] = {
+        x, y,
+        r: isMax ? 0 : it.r * (this.props.messiness ?? 1),
+        z: isMax ? 9999 : it.z,
+        s: sc,
+        cursor: this.mobile ? 'default' : (dragging ? 'grabbing' : 'grab'),
+        book: this.bookRefs[id],
+        openOp: it.turned > 0 ? 1 : 0,
+        nextOp: it.turned < this.maxTurn[id] ? 1 : 0,
+        nextPtr: it.turned < this.maxTurn[id] ? 'auto' : 'none',
+        prevOp: it.turned > 0 ? 1 : 0,
+        prevPtr: it.turned > 0 ? 'auto' : 'none',
+        move: this.state.dragging === id ? 'none' : 'left 0.45s cubic-bezier(0.3,0.9,0.3,1), top 0.45s cubic-bezier(0.3,0.9,0.3,1), transform 0.45s',
+        down: this.makeDown(id),
+        next: this.makeTurn(id, 1),
+        prev: this.makeTurn(id, -1),
+        max: this.makeMax(id),
+      };
+    });
+    return out;
+  }
+}
+</script>
+</body>
+</html>

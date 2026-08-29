@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#1c3350;}
+  ::selection{background:oklch(65% 0.13 75);color:#fff;}
+  a{color:#31435c;}
+  a:hover{color:oklch(65% 0.13 75);}
+</style>
+</helmet>
+
+<div style="position:relative;min-height:100vh;background:#1c3350 url('uploads/Untitled.png') center/{{ bgFit }};font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;padding:48px 20px;box-sizing:border-box;">
+
+  <!-- luz de flexo + viñeta -->
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 70% at 50% 22%, rgba(255,240,210,0.13), transparent 55%), radial-gradient(ellipse 130% 110% at 50% 50%, transparent 55%, rgba(4,12,24,0.4) 100%);pointer-events:none;"></div>
+
+  <!-- volver -->
+  <a href="Portfolio Mesa.dc.html" style="position:absolute;left:28px;top:24px;transform:rotate(-2deg);background:rgba(250,244,225,0.92);padding:8px 16px;box-shadow:0 6px 16px rgba(0,0,0,0.3);text-decoration:none;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:#31435c;">← Volver a la mesa</a>
+
+  <!-- hoja del formulario -->
+  <div style="position:relative;width:460px;max-width:100%;transform:rotate({{ paperTilt }}deg);background:#f7f3e8;border-radius:2px;box-shadow:0 4px 10px rgba(0,0,0,0.3), 0 28px 64px rgba(0,0,0,0.46);padding:36px 38px 32px;box-sizing:border-box;">
+    <div style="position:absolute;left:50%;top:-11px;transform:translateX(-50%) rotate(1.5deg);width:96px;height:24px;background:rgba(255,255,255,0.5);box-shadow:0 1px 2px rgba(0,0,0,0.1);"></div>
+
+    <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a7c5e;">FORMULARIO DE ENCARGO</div>
+    <div style="font-weight:800;font-size:32px;line-height:1;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:12px;">Cuéntame tu proyecto</div>
+    <sc-if value="{{ showAvailability }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:8px;margin-top:14px;">
+        <div style="width:9px;height:9px;border-radius:50%;background:#5d9e6d;flex:none;"></div>
+        <div style="font-size:13px;font-weight:600;color:#1e2733;">Disponible para encargos</div>
+        <div style="font-size:11.5px;color:#8a7c5e;">· Presencial BCN · remoto · &lt; 24 h</div>
+      </div>
+    </sc-if>
+
+    <div style="border-top:1px solid #ddd3ba;margin-top:18px;padding-top:18px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;gap:12px;">
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;">
+          <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TU NOMBRE</span>
+          <input ref="{{ formNameRef }}" placeholder="Nombre" style="font-size:13px;padding:10px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;">
+        </label>
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;">
+          <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TU EMAIL</span>
+          <input ref="{{ formMailRef }}" type="email" placeholder="tu@email.com" style="font-size:13px;padding:10px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;">
+        </label>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:5px;">
+        <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TELÉFONO <span style="color:#a89a78;letter-spacing:0.06em;">(OPCIONAL)</span></span>
+        <input ref="{{ formTelRef }}" type="tel" placeholder="+34 ···" style="font-size:13px;padding:10px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:5px;">
+        <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TIPO DE PROYECTO</span>
+        <select ref="{{ formTypeRef }}" onChange="{{ typeChanged }}" style="font-size:13px;padding:10px 8px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;">
+          <option>Branding</option>
+          <option>Editorial / cartel</option>
+          <option>Motion</option>
+          <option>Producto digital</option>
+          <option>Otro</option>
+        </select>
+      </label>
+      <sc-if value="{{ isOther }}" hint-placeholder-val="{{ false }}">
+        <label style="display:flex;flex-direction:column;gap:5px;">
+          <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">¿QUÉ TIPO DE PROYECTO?</span>
+          <input ref="{{ formOtherRef }}" placeholder="Describe brevemente qué necesitas" style="font-size:13px;padding:10px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;">
+        </label>
+      </sc-if>
+      <label style="display:flex;flex-direction:column;gap:5px;position:relative;">
+        <span style="display:flex;align-items:center;gap:7px;font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">EL PROYECTO
+          <span onClick="{{ toggleHint }}" title="¿Qué escribo aquí?" style="display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;border:1px solid #cbbf9e;color:#8a7c5e;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;user-select:none;" style-hover="background:#1e2733;color:#f7f3e8;border-color:#1e2733;">?</span>
+        </span>
+        <sc-if value="{{ showHint }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:24px;left:0;right:0;z-index:5;background:#fbf7ea;border:1px solid #ddd3ba;border-radius:3px;padding:12px 14px;box-shadow:0 8px 20px rgba(0,0,0,0.18);font-size:11.5px;line-height:1.55;color:#3a4250;">
+            No hacen falta detalles: con una idea general de lo que quieres conseguir es suficiente. Después profundizaremos en todo — reuniones y las hojas de proyecto que te enviaré para concretar cada detalle.
+          </div>
+        </sc-if>
+        <textarea ref="{{ formMsgRef }}" placeholder="¿Qué necesitas? Dos líneas bastan." rows="5" style="resize:none;font-size:13px;padding:10px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea>
+      </label>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <div onClick="{{ formSend }}" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 22px;background:{{ accentColor }};color:#f7f3e8;border-radius:3px;cursor:pointer;" style-hover="filter:brightness(1.3);">{{ formBtnLabel }}</div>
+        <div style="font-size:10.5px;color:#8a7c5e;max-width:220px;line-height:1.4;">{{ formHint }}</div>
+      </div>
+    </div>
+
+    <div style="font-family:'Caveat',cursive;font-size:20px;color:#31435c;margin-top:20px;">¿hacemos algo juntos?</div>
+    <div style="position:absolute;right:14px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">adria.carreteromunoz@gmail.com</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;web3formsKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2292d0d0-9c76-4efd-9b22-dc41ba7a97e4&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Envío&quot;},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1e2733&quot;,&quot;options&quot;:[&quot;#1e2733&quot;,&quot;#31435c&quot;,&quot;#a3777d&quot;,&quot;#8a7c5e&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Estilo&quot;},&quot;paperTilt&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:-0.8,&quot;min&quot;:-4,&quot;max&quot;:4,&quot;step&quot;:0.2,&quot;unit&quot;:&quot;deg&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Estilo&quot;},&quot;bgFit&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;cover&quot;,&quot;options&quot;:[&quot;cover&quot;,&quot;contain&quot;,&quot;100% 100%&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Fondo&quot;},&quot;showAvailability&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenido&quot;},&quot;messiness&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Mesa&quot;},&quot;startTidy&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Mesa&quot;}}">
+class Component extends DCLogic {
+  state = { status: 'idle', isOther: false, showHint: false }; // status: idle | sending | ok | error
+  formOtherRef = React.createRef();
+  formTelRef = React.createRef();
+  formNameRef = React.createRef();
+  formMailRef = React.createRef();
+  formTypeRef = React.createRef();
+  formMsgRef = React.createRef();
+  renderVals() {
+    return {
+      bgFit: this.props.bgFit ?? 'cover',
+      paperTilt: this.props.paperTilt ?? -0.8,
+      accentColor: this.props.accentColor ?? '#1e2733',
+      showAvailability: this.props.showAvailability ?? true,
+      formNameRef: this.formNameRef,
+      formMailRef: this.formMailRef,
+      formTypeRef: this.formTypeRef,
+      formMsgRef: this.formMsgRef,
+      isOther: this.state.isOther,
+      showHint: this.state.showHint,
+      formOtherRef: this.formOtherRef,
+      formTelRef: this.formTelRef,
+      typeChanged: (e) => this.setState({ isOther: e.target.value === 'Otro' }),
+      toggleHint: () => this.setState((s) => ({ showHint: !s.showHint })),
+      formBtnLabel: { idle: 'Enviar →', sending: 'Enviando…', ok: 'Enviado ✓', error: 'Reintentar →' }[this.state.status],
+      formHint: {
+        idle: 'Te llega directo al correo de Adrià.',
+        sending: 'Enviando tu mensaje…',
+        ok: '¡Recibido! Te respondo en menos de 24 h.',
+        error: 'No se pudo enviar. Reintenta o escribe a adria.carreteromunoz@gmail.com',
+      }[this.state.status],
+      formSend: async () => {
+        if (this.state.status === 'sending' || this.state.status === 'ok') return;
+        const name = (this.formNameRef.current?.value || '').trim();
+        const mail = (this.formMailRef.current?.value || '').trim();
+        let type = this.formTypeRef.current?.value || 'Proyecto';
+        const other = (this.formOtherRef.current?.value || '').trim();
+        if (type === 'Otro' && other) type = 'Otro: ' + other;
+        const msg = (this.formMsgRef.current?.value || '').trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { this.formMailRef.current?.focus(); this.setState({ status: 'error' }); return; }
+        if (!msg) { this.formMsgRef.current?.focus(); this.setState({ status: 'error' }); return; }
+        this.setState({ status: 'sending' });
+        try {
+          const key = this.props.web3formsKey ?? '2292d0d0-9c76-4efd-9b22-dc41ba7a97e4';
+          if (!key) throw new Error('missing access key');
+          const res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ access_key: key, name, email: mail, telefono: (this.formTelRef.current?.value || '').trim(), subject: `Encargo · ${type}${name ? ' — ' + name : ''}`, tipo: type, mensaje: msg }),
+          });
+          const data = await res.json();
+          if (!res.ok || !data.success) throw new Error('status ' + res.status);
+          this.setState({ status: 'ok' });
+        } catch (e) {
+          // fallback: abre el correo del visitante con el mensaje redactado
+          const subject = encodeURIComponent(`Encargo · ${type}${name ? ' — ' + name : ''}`);
+          const body = encodeURIComponent(`Hola Adrià,\n\n${msg}\n\n— ${name}\n${mail}`);
+          window.location.href = `mailto:adria.carreteromunoz@gmail.com?subject=${subject}&body=${body}`;
+          this.setState({ status: 'error' });
+        }
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

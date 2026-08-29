@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#1c3350;}
+  ::selection{background:oklch(65% 0.13 75);color:#fff;}
+  a{color:#31435c;} a:hover{color:oklch(65% 0.13 75);}
+  input[type=range]{accent-color:#a3777d;}
+  input[type=checkbox]{accent-color:#1e2733;width:15px;height:15px;flex:none;}
+</style>
+</helmet>
+
+<div style="position:relative;min-height:100vh;background:#1c3350 url('uploads/small/untitled-mesa.jpg') center/cover;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',Helvetica,sans-serif;display:flex;align-items:flex-start;justify-content:center;padding:48px 20px 64px;box-sizing:border-box;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 70% at 50% 22%, rgba(255,240,210,0.13), transparent 55%), radial-gradient(ellipse 130% 110% at 50% 50%, transparent 55%, rgba(4,12,24,0.4) 100%);pointer-events:none;"></div>
+
+  <a href="Portfolio Mesa.dc.html" style="position:absolute;left:28px;top:24px;transform:rotate(-2deg);background:rgba(250,244,225,0.92);padding:8px 16px;box-shadow:0 6px 16px rgba(0,0,0,0.3);text-decoration:none;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:#31435c;">← Volver a la mesa</a>
+
+  <div style="position:relative;width:{{ wrapW }};max-width:100%;transform:rotate(-0.5deg);margin-top:26px;transition:width 0.55s cubic-bezier(0.35,0.9,0.3,1);">
+    <div style="position:absolute;left:26px;top:-24px;background:#b08a5e;border-radius:5px 5px 0 0;padding:7px 22px 12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#f7f3e8;box-shadow:0 -2px 6px rgba(0,0,0,0.12);">BRIEFING · 07</div>
+    <div style="position:relative;background:#c99f68;border-radius:0 5px 5px 5px;box-shadow:0 3px 8px rgba(0,0,0,0.28), 0 22px 48px rgba(0,0,0,0.42);padding:12px;box-sizing:border-box;display:flex;gap:12px;align-items:stretch;">
+    <!-- portada (cerrado) -->
+    <div onClick="{{ openBook }}" style="position:absolute;inset:0;z-index:20;background:#c99f68;border-radius:0 5px 5px 5px;display:{{ coverDisp }};align-items:center;justify-content:center;cursor:pointer;transform:scaleX({{ coverFold }});transform-origin:left center;transition:transform 0.6s cubic-bezier(0.35,0.9,0.3,1);box-shadow:0 3px 8px rgba(0,0,0,0.28);">
+      <div style="position:absolute;inset:12px;background:#f7f3e8;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:30px;box-sizing:border-box;text-align:center;">
+        <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.2em;color:#8a7c5e;">DISEÑO &amp; IDENTIDAD VISUAL</div>
+        <div style="font-weight:800;font-size:44px;line-height:0.95;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;">Briefing de proyecto</div>
+        <div style="font-size:12px;color:#3a4250;max-width:300px;line-height:1.6;">6 páginas · 10 minutos · sin respuestas incorrectas</div>
+        <div style="font-family:'Caveat',cursive;font-size:24px;color:#31435c;margin-top:6px;">toca para abrir ✳</div>
+      </div>
+    </div>
+    <!-- página izquierda (interior de la portada) -->
+    <div style="width:250px;flex:none;background:#f3eedf;border-radius:2px;box-shadow:inset -6px 0 10px -8px rgba(0,0,0,0.3);padding:26px 24px;box-sizing:border-box;display:{{ leftDisp }};flex-direction:column;gap:8px;">
+      <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;margin-bottom:6px;">ÍNDICE</div>
+      <div onClick="{{ goPg1 }}" style="display:flex;gap:8px;font-size:12px;cursor:pointer;color:{{ tocC1 }};font-weight:{{ tocW1 }};" style-hover="color:#a3777d;"><span style="color:#a3777d;font-weight:800;">1</span>Contacto</div>
+      <div onClick="{{ goPg2 }}" style="display:flex;gap:8px;font-size:12px;cursor:pointer;color:{{ tocC2 }};font-weight:{{ tocW2 }};" style-hover="color:#a3777d;"><span style="color:#a3777d;font-weight:800;">2</span>Tu negocio</div>
+      <div onClick="{{ goPg3 }}" style="display:flex;gap:8px;font-size:12px;cursor:pointer;color:{{ tocC3 }};font-weight:{{ tocW3 }};" style-hover="color:#a3777d;"><span style="color:#a3777d;font-weight:800;">3</span>Mercado y público</div>
+      <div onClick="{{ goPg4 }}" style="display:flex;gap:8px;font-size:12px;cursor:pointer;color:{{ tocC4 }};font-weight:{{ tocW4 }};" style-hover="color:#a3777d;"><span style="color:#a3777d;font-weight:800;">4</span>Personalidad y estilo</div>
+      <div onClick="{{ goPg5 }}" style="display:flex;gap:8px;font-size:12px;cursor:pointer;color:{{ tocC5 }};font-weight:{{ tocW5 }};" style-hover="color:#a3777d;"><span style="color:#a3777d;font-weight:800;">5</span>Alcance</div>
+      <div onClick="{{ goPg6 }}" style="display:flex;gap:8px;font-size:12px;cursor:pointer;color:{{ tocC6 }};font-weight:{{ tocW6 }};" style-hover="color:#a3777d;"><span style="color:#a3777d;font-weight:800;">6</span>Tiempos y envío</div>
+      <div style="border-top:1px solid #ddd3ba;margin-top:auto;padding-top:12px;font-size:11px;line-height:1.6;color:#3a4250;">Tus respuestas se guardan al pasar de página. Puedes saltar entre secciones desde aquí.</div>
+      <div style="font-family:'Caveat',cursive;font-size:18px;color:#31435c;">sin prisa — Adrià</div>
+    </div>
+    <!-- página derecha (formulario) -->
+    <div style="position:relative;flex:1;min-width:0;background:#f7f3e8;border-radius:2px;box-shadow:inset 6px 0 10px -8px rgba(0,0,0,0.35);padding:32px 38px 30px;box-sizing:border-box;transform:scaleX({{ sheetFold }});transform-origin:left center;transition:transform 0.32s cubic-bezier(0.35,0.9,0.3,1);">
+
+    <div style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8a7c5e;">DISEÑO &amp; IDENTIDAD VISUAL</div>
+    <div style="font-weight:800;font-size:30px;line-height:1;letter-spacing:-0.02em;text-transform:uppercase;color:#1e2733;margin-top:12px;">Conozcamos tu proyecto</div>
+    <p style="font-size:12.5px;line-height:1.6;color:#3a4250;margin:12px 0 0;">Cuanto más detallado y honesto seas, más preciso será el resultado. Responde lo que puedas — lo que no sepas, lo resolvemos juntos.</p>
+
+    <!-- BLOQUE 1 -->
+    <div style="border-top:1px solid #ddd3ba;margin-top:20px;padding-top:18px;flex-direction:column;gap:12px;display:{{ pg1 }};">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-weight:800;font-size:16px;color:#a3777d;">1</span><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">INFORMACIÓN GENERAL Y CONTACTO</span></div>
+      <div style="display:flex;gap:12px;">
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">EMPRESA / MARCA</span><input ref="{{ rMarca }}" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">PERSONA DE CONTACTO Y CARGO</span><input ref="{{ rContacto }}" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <label style="flex:1.2;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">EMAIL</span><input ref="{{ rEmail }}" type="email" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+        <label style="flex:0.8;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TELÉFONO</span><input ref="{{ rTel }}" type="tel" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">SITIO WEB</span><input ref="{{ rWeb }}" placeholder="www…" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">INSTAGRAM</span><input ref="{{ rInsta }}" placeholder="@…" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">OTRAS REDES (TIKTOK, LINKEDIN, X…)</span><input ref="{{ rRedes }}" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">¿QUIÉN TOMA LAS DECISIONES FINALES?</span><input ref="{{ rDecisores }}" placeholder="Tú solo, un socio, un comité…" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+      </div>
+    </div>
+
+    <!-- BLOQUE 2 -->
+    <div style="border-top:1px solid #ddd3ba;margin-top:20px;padding-top:18px;flex-direction:column;gap:12px;display:{{ pg2 }};">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-weight:800;font-size:16px;color:#a3777d;">2</span><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">LA EMPRESA Y EL NEGOCIO</span></div>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">¿A QUÉ SE DEDICA? PRODUCTOS O SERVICIOS PRINCIPALES</span><textarea ref="{{ rDedica }}" rows="2" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">HISTORIA Y CONTEXTO · ¿MARCA NUEVA O REDISEÑO? ¿POR QUÉ AHORA?</span><textarea ref="{{ rHistoria }}" rows="2" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">MISIÓN, VISIÓN Y 3-4 VALORES IRRENUNCIABLES</span><textarea ref="{{ rValores }}" rows="2" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">¿QUÉ TE HACE DIFERENTE? ¿POR QUÉ ELEGIRTE A TI Y NO A OTRO?</span><textarea ref="{{ rPuv }}" rows="2" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+    </div>
+
+    <!-- BLOQUE 3 -->
+    <div style="border-top:1px solid #ddd3ba;margin-top:20px;padding-top:18px;flex-direction:column;gap:12px;display:{{ pg3 }};">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-weight:800;font-size:16px;color:#a3777d;">3</span><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">MERCADO, COMPETENCIA Y PÚBLICO</span></div>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TU CLIENTE IDEAL · EDAD, UBICACIÓN, INTERESES, QUÉ PROBLEMA LE RESUELVES</span><textarea ref="{{ rPublico }}" rows="2" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">2-3 COMPETIDORES (CON WEB SI PUEDES) · QUÉ TE GUSTA Y QUÉ NO DE SU DISEÑO</span><textarea ref="{{ rCompetencia }}" rows="2" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">¿CÓMO QUIERES QUE TE PERCIBAN? (LUJO, ECONÓMICO, INNOVADOR, TRADICIONAL, ECO…)</span><input ref="{{ rPosicion }}" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+    </div>
+
+    <!-- BLOQUE 4 -->
+    <div style="border-top:1px solid #ddd3ba;margin-top:20px;padding-top:18px;flex-direction:column;gap:12px;display:{{ pg4 }};">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-weight:800;font-size:16px;color:#a3777d;">4</span><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">PERSONALIDAD Y ESTILO VISUAL</span></div>
+      <div style="font-size:11.5px;color:#3a4250;">Si tu marca fuera una persona, ¿cómo sería? Mueve cada barra hacia el lado que más encaje:</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:grid;grid-template-columns:110px 1fr 110px;align-items:center;gap:10px;font-size:11px;color:#3a4250;"><span style="text-align:right;">Moderna</span><input ref="{{ rP1 }}" type="range" min="1" max="5" defaultValue="3" style="width:100%;"><span>Clásica</span></div>
+        <div style="display:grid;grid-template-columns:110px 1fr 110px;align-items:center;gap:10px;font-size:11px;color:#3a4250;"><span style="text-align:right;">Accesible</span><input ref="{{ rP2 }}" type="range" min="1" max="5" defaultValue="3" style="width:100%;"><span>Exclusiva</span></div>
+        <div style="display:grid;grid-template-columns:110px 1fr 110px;align-items:center;gap:10px;font-size:11px;color:#3a4250;"><span style="text-align:right;">Divertida</span><input ref="{{ rP3 }}" type="range" min="1" max="5" defaultValue="3" style="width:100%;"><span>Seria</span></div>
+        <div style="display:grid;grid-template-columns:110px 1fr 110px;align-items:center;gap:10px;font-size:11px;color:#3a4250;"><span style="text-align:right;">Minimalista</span><input ref="{{ rP4 }}" type="range" min="1" max="5" defaultValue="3" style="width:100%;"><span>Detallista</span></div>
+        <div style="display:grid;grid-template-columns:110px 1fr 110px;align-items:center;gap:10px;font-size:11px;color:#3a4250;"><span style="text-align:right;">Cálida</span><input ref="{{ rP5 }}" type="range" min="1" max="5" defaultValue="3" style="width:100%;"><span>Técnica</span></div>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">TONO DE VOZ · ¿CÓMO HABLA LA MARCA? (CERCANO, CORPORATIVO, TÉCNICO, HUMOR…)</span><input ref="{{ rTono }}" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">REFERENCIAS · 3-5 MARCAS O ENLACES CUYO DISEÑO TE GUSTE, Y QUÉ TE ATRAE DE ELLAS</span><textarea ref="{{ rRefs }}" rows="2" placeholder="Pinterest, Behance, Instagram…" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">ARCHIVOS DE INSPIRACIÓN · IMÁGENES O PDF QUE TE GUSTEN (HASTA 3)</span>
+        <input ref="{{ rFiles }}" onChange="{{ filesChanged }}" type="file" accept="image/*,application/pdf" multiple="" style="display:none;">
+        <div onClick="{{ pickFiles }}" style="border:1.5px dashed #cbbf9e;border-radius:3px;background:#fffdf6;padding:14px;text-align:center;font-size:12px;color:#8a7c5e;cursor:pointer;" style-hover="border-color:#a3777d;color:#a3777d;">{{ filesLabel }}</div>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">LO QUE DEFINITIVAMENTE NO QUIERES · COLORES, FORMAS O ESTILOS A EVITAR</span><textarea ref="{{ rNoQuiero }}" rows="2" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+    </div>
+
+    <!-- BLOQUE 5 -->
+    <div style="border-top:1px solid #ddd3ba;margin-top:20px;padding-top:18px;flex-direction:column;gap:12px;display:{{ pg5 }};">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-weight:800;font-size:16px;color:#a3777d;">5</span><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">ALCANCE Y ENTREGABLES</span></div>
+      <div ref="{{ rChecks }}" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;color:#3a4250;">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="Logotipo / identidad visual">Logotipo / identidad visual</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="Rediseño de logo existente">Rediseño de logo existente</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="Manual de identidad">Manual de identidad / guía de marca</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="Papelería corporativa">Papelería corporativa</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="Packaging / etiquetado">Packaging / etiquetado</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="Plantillas para RRSS">Plantillas para redes sociales</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="Diseño web / UI">Diseño web / UI</label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="Publicidad (flyers, banners, catálogos)">Publicidad (flyers, banners…)</label>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">OTRO ENTREGABLE QUE NECESITES</span><input ref="{{ rOtro }}" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">¿HAY ELEMENTOS ACTUALES QUE DEBAN MANTENERSE? (COLOR, TIPOGRAFÍA, PARTE DEL LOGO…)</span><input ref="{{ rMantener }}" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+    </div>
+
+    <!-- BLOQUE 6 -->
+    <div style="border-top:1px solid #ddd3ba;margin-top:20px;padding-top:18px;flex-direction:column;gap:12px;display:{{ pg6 }};">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-weight:800;font-size:16px;color:#a3777d;">6</span><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#8a7c5e;">LOGÍSTICA, TIEMPOS Y PRESUPUESTO</span></div>
+      <div style="display:flex;gap:12px;">
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">FECHA LÍMITE · ¿LANZAMIENTO, EVENTO, FERIA?</span><input ref="{{ rDeadline }}" placeholder="Ej.: apertura en octubre / sin prisa" style="font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;min-width:0;"></label>
+        <label style="flex:1;display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">PRESUPUESTO ORIENTATIVO</span>
+          <select ref="{{ rBudget }}" style="font-size:13px;padding:9px 8px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;">
+            <option>Aún no lo sé</option>
+            <option>&lt; 300 €</option>
+            <option>300 – 800 €</option>
+            <option>800 – 1.500 €</option>
+            <option>&gt; 1.500 €</option>
+          </select>
+        </label>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:5px;"><span style="font-family:ui-monospace,'SF Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8a7c5e;">OBSERVACIONES · CUALQUIER COSA QUE NO HAYAMOS CUBIERTO</span><textarea ref="{{ rObs }}" rows="2" style="resize:none;font-size:13px;padding:9px 11px;border:1px solid #cbbf9e;border-radius:3px;background:#fffdf6;color:#1e2733;outline:none;font-family:inherit;line-height:1.5;"></textarea></label>
+    </div>
+
+    <div style="border-top:1px solid #ddd3ba;margin-top:20px;padding-top:18px;align-items:center;gap:14px;display:{{ pg6 }};">
+      <div onClick="{{ send }}" style="font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:11px 22px;background:#1e2733;color:#f7f3e8;border-radius:3px;cursor:pointer;" style-hover="filter:brightness(1.3);">{{ btnLabel }}</div>
+      <div style="font-size:10.5px;color:#8a7c5e;max-width:280px;line-height:1.4;">{{ hint }}</div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:24px;border-top:2px solid #1e2733;padding-top:14px;">
+      <div onClick="{{ prevPg }}" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;border:1.5px solid #1e2733;color:#1e2733;border-radius:3px;cursor:{{ prevCursor }};opacity:{{ prevOp }};user-select:none;" style-hover="background:#1e2733;color:#f7f3e8;">← Anterior</div>
+      <div style="display:flex;align-items:center;gap:6px;">{{ pageDots }}</div>
+      <div onClick="{{ nextPg }}" style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:8px 16px;background:#1e2733;color:#f7f3e8;border-radius:3px;cursor:pointer;visibility:{{ nextVis }};user-select:none;" style-hover="filter:brightness(1.3);">Siguiente →</div>
+    </div>
+    <div style="font-family:'Caveat',cursive;font-size:20px;color:#31435c;margin-top:16px;">{{ pageNote }}</div>
+    <div style="position:absolute;right:14px;bottom:12px;font-family:ui-monospace,'SF Mono',monospace;font-size:10px;color:#a89a78;">{{ pageNum }} · adria.carreteromunoz@gmail.com</div>
+    </div>
+    <div onClick="{{ nextPg }}" title="Pasar página" style="position:absolute;right:12px;bottom:12px;width:0;height:0;border-bottom:34px solid #e8dfc8;border-left:34px solid transparent;cursor:pointer;filter:drop-shadow(-2px -2px 3px rgba(0,0,0,0.15));visibility:{{ nextVis }};" style-hover="border-bottom-color:#d9cca8;"></div>
+    <div onClick="{{ prevPg }}" title="Página anterior" style="position:absolute;left:12px;bottom:12px;width:0;height:0;border-bottom:34px solid #e8dfc8;border-right:34px solid transparent;cursor:pointer;filter:drop-shadow(2px -2px 3px rgba(0,0,0,0.15));visibility:{{ prevVis }};" style-hover="border-bottom-color:#d9cca8;"></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;web3formsKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2292d0d0-9c76-4efd-9b22-dc41ba7a97e4&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Envío&quot;}}">
+class Component extends DCLogic {
+  state = { status: 'idle', fileNames: [], page: 1, folding: false, open: false, opening: false };
+  goPage(n) {
+    if (n < 1 || n > 6 || n === this.state.page || this.state.folding) return;
+    this.setState({ folding: true });
+    setTimeout(() => { this.setState({ page: n, folding: false }); window.scrollTo({ top: 0, behavior: 'smooth' }); }, 330);
+  }
+  refsMap = {};
+  r(name) { return (this.refsMap[name] ||= React.createRef()); }
+  renderVals() {
+    const v = (n) => (this.r(n).current?.value || '').trim();
+    const names = ['rMarca','rContacto','rEmail','rTel','rWeb','rInsta','rRedes','rDecisores','rDedica','rHistoria','rValores','rPuv','rPublico','rCompetencia','rPosicion','rP1','rP2','rP3','rP4','rP5','rTono','rRefs','rNoQuiero','rOtro','rMantener','rDeadline','rBudget','rObs','rChecks','rFiles'];
+    const out = {};
+    names.forEach((n) => { out[n] = this.r(n); });
+    out.filesLabel = this.state.fileNames.length ? '📎 ' + this.state.fileNames.join(' · ') + '  (toca para cambiar)' : 'Toca para adjuntar imágenes o PDF de inspiración';
+    out.pickFiles = () => this.r('rFiles').current?.click();
+    out.filesChanged = () => {
+      const files = [...(this.r('rFiles').current?.files || [])].slice(0, 3);
+      this.setState({ fileNames: files.map((f) => f.name) });
+    };
+    const pg = this.state.page;
+    for (let i = 1; i <= 6; i++) out['pg' + i] = pg === i ? 'flex' : 'none';
+    out.pageNum = 'PÁG. ' + pg + '/6';
+    out.sheetFold = this.state.folding ? 0.04 : 1;
+    out.wrapW = this.state.open ? 'min(940px, 100%)' : 'min(560px, 100%)';
+    out.coverDisp = this.state.open && !this.state.opening ? 'none' : 'flex';
+    out.coverFold = this.state.opening ? 0.03 : 1;
+    out.leftDisp = this.state.open ? 'flex' : 'none';
+    out.openBook = () => {
+      if (this.state.open || this.state.opening) return;
+      this.setState({ opening: true, open: true });
+      setTimeout(() => this.setState({ opening: false }), 620);
+    };
+    for (let i = 1; i <= 6; i++) {
+      out['goPg' + i] = () => this.goPage(i);
+      out['tocC' + i] = pg === i ? '#1e2733' : '#8a7c5e';
+      out['tocW' + i] = pg === i ? 700 : 400;
+    }
+    out.prevOp = pg > 1 ? 1 : 0.35;
+    out.prevCursor = pg > 1 ? 'pointer' : 'default';
+    out.nextVis = pg < 6 ? 'visible' : 'hidden';
+    out.prevVis = pg > 1 ? 'visible' : 'hidden';
+    out.prevPg = () => this.goPage(this.state.page - 1);
+    out.nextPg = () => this.goPage(this.state.page + 1);
+    out.pageDots = React.createElement('div', { style: { display: 'flex', gap: '6px' } },
+      [1, 2, 3, 4, 5, 6].map((i) => React.createElement('div', {
+        key: i, onClick: () => this.goPage(i),
+        style: { width: '9px', height: '9px', borderRadius: '50%', cursor: 'pointer', background: i === pg ? '#a3777d' : '#ddd3ba', transition: 'background 0.2s' },
+      })));
+    out.pageNote = ['empecemos por lo básico', 'háblame de tu negocio', '¿quién es tu gente?', 'la parte divertida ✳', '¿qué construimos?', 'lo último, prometido'][pg - 1];
+    out.btnLabel = { idle: 'Enviar briefing →', sending: 'Enviando…', ok: 'Enviado ✓', error: 'Reintentar →' }[this.state.status];
+    out.hint = {
+      idle: 'Te llega directo al correo de Adrià, con los archivos adjuntos.',
+      sending: 'Enviando…',
+      ok: '¡Recibido! Con esto preparo tu presupuesto y te escribo.',
+      error: 'Revisa el email y que hayas contado a qué te dedicas — o escribe a adria.carreteromunoz@gmail.com',
+    }[this.state.status];
+    out.send = async () => {
+      if (this.state.status === 'sending' || this.state.status === 'ok') return;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('rEmail'))) { this.r('rEmail').current?.focus(); this.setState({ status: 'error' }); return; }
+      if (!v('rDedica')) { this.r('rDedica').current?.focus(); this.setState({ status: 'error' }); return; }
+      this.setState({ status: 'sending' });
+      try {
+        const scale = (n, a, b) => `${a} ${v(n) || 3}/5 ${b}`;
+        const checks = [...(this.r('rChecks').current?.querySelectorAll('input:checked') || [])].map((c) => c.value);
+        const fd = new FormData();
+        const fields = {
+          access_key: this.props.web3formsKey ?? '2292d0d0-9c76-4efd-9b22-dc41ba7a97e4',
+          subject: `Briefing · ${v('rMarca') || 'sin marca'} — ${v('rContacto')}`,
+          name: v('rContacto'), email: v('rEmail'), telefono: v('rTel'),
+          marca: v('rMarca'), web: v('rWeb'), instagram: v('rInsta'), otras_redes: v('rRedes'), decisores: v('rDecisores'),
+          a_que_se_dedica: v('rDedica'), historia: v('rHistoria'), mision_valores: v('rValores'), diferenciacion: v('rPuv'),
+          publico: v('rPublico'), competencia: v('rCompetencia'), posicionamiento: v('rPosicion'),
+          personalidad: [scale('rP1','Moderna','Clásica'), scale('rP2','Accesible','Exclusiva'), scale('rP3','Divertida','Seria'), scale('rP4','Minimalista','Detallista'), scale('rP5','Cálida','Técnica')].join(' | '),
+          tono_de_voz: v('rTono'), referencias: v('rRefs'), no_quiere: v('rNoQuiero'),
+          entregables: checks.join(', ') + (v('rOtro') ? ' · Otro: ' + v('rOtro') : ''),
+          mantener: v('rMantener'), deadline: v('rDeadline'), presupuesto: this.r('rBudget').current?.value || '', observaciones: v('rObs'),
+          adjuntos: this.state.fileNames.join(', ') || 'ninguno',
+        };
+        Object.entries(fields).forEach(([k, val]) => fd.append(k, val));
+        [...(this.r('rFiles').current?.files || [])].slice(0, 3).forEach((f) => fd.append('attachment', f));
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+        const data = await res.json();
+        if (!res.ok || !data.success) throw new Error('fail');
+        this.setState({ status: 'ok' });
+      } catch (e) { this.setState({ status: 'error' }); }
+    };
+    return out;
+  }
+}
+</script>
+</body>
+</html>
