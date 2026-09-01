@@ -1,0 +1,20 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "no-invalid-position-at-import-rule": null,
+    "no-descending-specificity": null,
+    "rule-empty-line-before": null,
+    "at-rule-no-unknown": null
+  },
+  "ignoreFiles": [
+    "**/node_modules/**",
+    "**/*.dc.html",
+    "**/Dossier*.html",
+    "**/Portfolio*.html",
+    "**/Formulario*.html",
+    "**/Briefing*.html",
+    "**/Contrato*.html",
+    "**/Presupuesto*.html",
+    "**/Panel*.html"
+  ]
+}
